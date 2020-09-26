@@ -1,3 +1,7 @@
+.card{
+    margin-top: 10px;
+}
+
 #email-input .form-control{
     height: 30px;
     font-size: 15px;
@@ -26,4 +30,10 @@ input::placeholder{
 
 .fuente-custom{
     font-size: 15px;
+}
+
+#info-registro .form-control{
+    width: 49%;
+    display: inline;
+    
 }
