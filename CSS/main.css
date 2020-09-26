@@ -1,0 +1,29 @@
+#email-input .form-control{
+    height: 30px;
+    font-size: 15px;
+}
+
+#email-input .form-control::placeholder{
+    opacity: 0.8;
+}
+
+#pass-input .form-control::placeholder{
+    opacity: 0.8;
+}
+
+#pass-input .form-control{
+    height: 30px;
+    font-size: 15px;
+}
+
+input::placeholder{
+    opacity: 0.7;
+}
+
+.boton-ln{
+    width: 100%;
+}
+
+.fuente-custom{
+    font-size: 15px;
+}
