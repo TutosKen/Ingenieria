@@ -3,12 +3,12 @@ session_start();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <?php 
         require_once('PHP/head.php');
     ?>
-    <title>Animales</title>
+    <title>Iniciar sesion animales</title>
 </head>
 <body>
 
@@ -20,12 +20,12 @@ session_start();
     <form action="PHP/login-action.php" method="POST">
         <div class="form-group" id="email-input">
             <label class="fuente-custom" for="Email">Email</label>
-            <input type="text" name="email" class="form-control fuente-custom" id="Email" placeholder="Correo electronico">
+            <input type="text" name="email" class="form-control form-control-sm" id="Email" placeholder="Correo electronico">
         </div>
 
         <div class="form-group" id="pass-input">
             <label class="fuente-custom" for="Contrasenna">Contraseña</label>
-            <input type="password" name="pass" class="form-control" id="Contrasenna" placeholder="Contraseña">
+            <input type="password" name="pass" class="form-control form-control-sm" id="Contrasenna" placeholder="Contraseña">
         </div>
 
         <div class="text-center">

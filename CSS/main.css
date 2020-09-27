@@ -1,10 +1,36 @@
-.card{
-    margin-top: 10px;
+body{
+    margin: 0;
+    padding: 0;
 }
 
-#email-input .form-control{
-    height: 30px;
-    font-size: 15px;
+a{
+    color:green !important;
+    text-decoration: none !important;
+}
+
+a:hover{
+    color:#0eb50e !important;
+}
+
+main{
+    margin-left: 80px;
+    padding: 16px;
+}
+
+body::-webkit-scrollbar{
+    width: 5px;
+}
+
+body::-webkit-scrollbar-track{
+    background: #1e1e24;
+}
+
+body::-webkit-scrollbar-thumb{
+    background-color:green;
+}
+
+.card{
+    margin-top: 10px;
 }
 
 #email-input .form-control::placeholder{
@@ -13,11 +39,6 @@
 
 #pass-input .form-control::placeholder{
     opacity: 0.8;
-}
-
-#pass-input .form-control{
-    height: 30px;
-    font-size: 15px;
 }
 
 input::placeholder{
@@ -32,8 +53,157 @@ input::placeholder{
     font-size: 15px;
 }
 
-#info-registro .form-control{
+#nombreyap .form-control{
     width: 49%;
     display: inline;
-    
+}
+
+#info-registro .resize-none{
+    resize: none;
+}
+
+#info-registro .margen{
+    margin-top: 10px;
+}
+
+
+
+/*Navbar*/
+
+.logo {
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: green;
+    font-size: 24px;
+    letter-spacing: 0.3ch;
+    width: 100%;
+  }
+
+  .logo svg{
+      transform: rotate(0deg);
+      transition: transform 600ms;
+  }
+
+.navbar-custom{
+    width: 80px;
+    height: 100vh;
+    background-color:#1e1f1e;
+    position: fixed;
+    transition: 100ms ease;
+    z-index: 1;
+}
+
+.navbar-custom-nav{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.nav-item-custom{
+    width: 100%;
+}
+
+.nav-item-custom:last-child{
+    margin-top: auto;
+}
+
+.nav-link-custom{
+    display: flex;
+    align-items: center;
+    height: 70px;
+    width: 80px;
+    filter: grayscale(100%);
+    transition: 400ms;
+}
+
+.nav-item-custom:hover{
+    background: #141418;
+}
+
+.nav-link-custom:hover{
+    filter: grayscale(0%);
+}
+
+.link-text{
+    display: none;
+    margin-left: 16px;
+}
+
+.nav-link-custom svg{
+    min-width: 30px;
+    margin: 0 24px;
+}
+
+.navbar-custom-nav:hover .logo svg{
+    transform: rotate(-180deg);
+}
+
+@media only screen and (max-width:650px){
+    .navbar-custom{
+        bottom: 0;
+        width: 100vw;
+        height: 80px;
+    }
+
+    .logo{
+        display: none;
+    }
+
+    .navbar-custom-nav{
+        flex-direction: row;
+    }
+
+    .nav-link-custom{
+        margin: 0 auto;
+    }
+
+    .nav-item-custom{
+        height: 80px;
+    }
+
+    main{
+        margin-left: 0;
+    }
+
+    .tarjeta{
+        margin-bottom: 85px;
+    }
+
+
+}
+
+@media only screen and (min-width:650px){
+    .navbar-custom{
+        top: 0;
+    }
+
+    .navbar-custom:hover .link-text{
+        display: block;
+        padding-left: 149px;
+        padding-right: 149px;
+        margin:-149px;
+        padding-bottom: 28px;
+        padding-top: 28px;
+    }
+    .navbar-custom:hover{
+        width: 256px;
+    }
+
+    .nav-item-custom:hover{
+        height: 70px;
+    }
+
+}
+
+
+@media only screen and (max-width:700px){
+    .card{
+        width: 350px !important;
+    }
 }
