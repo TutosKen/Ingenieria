@@ -20,43 +20,14 @@ session_start();
 
         <div class="container tarjeta">
             <div class="row">
-                <div class="col-12 mt-5">
-                    <input type="text" class="form-control" placeholder="Buscar...">
+                <div id="barraBusqueda" class="col-12 mt-5">
+                    <input id="buscar" type="text" class="form-control" placeholder="Buscar...">
                 </div>
 
                 <?php                    
                     $conn = New Conexion;
                     $conn->getImagenes();
                 ?>
-
-                <div class="col-6 col-md-3 mt-5">
-                    <div class="imagen"><a href="#"><img class="miniatura" src="img/airtm.jpg" alt=""><h4 class="text-center">Hola</h4></a></div>
-                </div>
-
-                <div class="col-6 col-md-3 mt-5">
-                    <div class="imagen"><a href="#"><img class="miniatura" src="img/airtm.jpg" alt=""><h4 class="text-center">Hola</h4></a></div>
-                </div>
-
-                <div class="col-6 col-md-3 mt-5">
-                    <div class="imagen"><a href="#"><img class="miniatura" src="img/airtm.jpg" alt=""><h4 class="text-center">Hola</h4></a></div>
-                </div>
-                
-                <div class="col-6 col-md-3 mt-5">
-                    <div class="imagen"><a href="#"><img class="miniatura" src="img/airtm.jpg" alt=""><h4 class="text-center">Hola</h4></a></div>
-                </div>
-
-                <div class="col-6 col-md-3 mt-5">
-                    <div class="imagen"><a href="#"><img class="miniatura" src="img/airtm.jpg" alt=""><h4 class="text-center">Hola</h4></a></div>
-                </div>
-
-                <div class="col-6 col-md-3 mt-5">
-                    <div class="imagen"><a href="#"><img class="miniatura" src="img/airtm.jpg" alt=""><h4 class="text-center">Hola</h4></a></div>
-                </div>
-
-                <div class="col-6 col-md-3 mt-5">
-                    <div class="imagen"><a href="#"><img class="miniatura" src="img/airtm.jpg" alt=""><h4 class="text-center">Hola</h4></a></div>
-                </div>
-
             
             </div>
         </div>
@@ -64,7 +35,7 @@ session_start();
 
 
         <?php
-            require_once('PHP/JS.php');
+            include('PHP/JS.php');
         ?>
     </body>
 </main>

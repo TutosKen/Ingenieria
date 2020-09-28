@@ -76,7 +76,9 @@
       </li>
 
       <li id="logout" class="nav-item-custom">
-        <a href="#" class="nav-link-custom">
+      <form id="salir" method="POST" action="PHP/acciones.php">
+        <a href="javascript:{}" onclick="document.getElementById('salir').submit();" class="nav-link-custom">
+        <input type="hidden" name="logout">
         <svg class="svg-icon" viewBox="0 0 20 20">
                             <path 
                             fill="currentColor" d="M11.469,10l7.08-7.08c0.406-0.406,0.406-1.064,0-1.469c-0.406-0.406-1.063-0.406-1.469,0L10,8.53l-7.081-7.08
@@ -86,6 +88,7 @@
 						</svg>
           <span class="link-text">Salir</span>
         </a>
+      </form>
       </li>
 </ul>
 
