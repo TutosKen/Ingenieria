@@ -6,7 +6,7 @@ body{
 }
 
 a{
-    color:green !important;
+    color:#42d662!important;
     text-decoration: none !important;
 }
 
@@ -146,6 +146,20 @@ input::placeholder{
     transform: rotate(-180deg);
 }
 
+.divImagenCompleta{
+    height: 90vh;
+    width: 100%;
+}
+
+.imagenCompleta{
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 1px;
+    border-color:#1e1f1e;
+}
+
 @media only screen and (max-width:660px){
     .navbar-custom{
         bottom: 0;
@@ -175,6 +189,10 @@ input::placeholder{
 
     .tarjeta{
         margin-bottom: 90px;
+    }
+
+    .divImagenCompleta{
+        height: 76vh;
     }
 
 
@@ -212,7 +230,7 @@ input::placeholder{
 
 @media only screen and (max-width:600px){
     .card{
-        width: 350px !important;
+        width: 320px !important;
     }
 }
 
@@ -230,6 +248,7 @@ input::placeholder{
     -ms-transform: scale(1.06); /* IE 9 */
     -webkit-transform: scale(1.06); /* Safari 3-8 */
     transform: scale(1.06);
+    opacity: 0.4;
 }
 
 .imagen>a>img{
@@ -239,12 +258,21 @@ input::placeholder{
     transition: .2s;
 }
 
-
+.vistas{
+    position: absolute;
+    top: 77px;
+    left: 1;
+    width: 50%;
+    height: 10px;
+    pointer-events: none;
+}
 
 @media only screen and (max-width:450px){
     .imagen{
         width: 150px;
     }
+
+    
 }
 
 .animarImagen {

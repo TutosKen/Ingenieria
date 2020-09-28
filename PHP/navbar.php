@@ -1,7 +1,7 @@
 <nav class="navbar-custom">
 <ul class="navbar-custom-nav">
       <li class="logo">
-        <a href="#" class="nav-link-custom">
+        <a href="/Animales/" class="nav-link-custom">
         <span class="link-text logo-text">Animales</span>
           <svg
             aria-hidden="true"

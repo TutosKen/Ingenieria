@@ -26,7 +26,14 @@ session_start();
 
                 <?php                    
                     $conn = New Conexion;
-                    $conn->getImagenes();
+                    $result = $conn->getImagenes();
+
+                    while($row = mysqli_fetch_assoc($result)) {
+                        echo "<div class='animarImagen col-6 col-md-3 mt-5'>";
+                        echo "<div class='imagen'><a href='/Animales/PHP/Post.php?IDimagen=".$row['IDPost']."'><img class='miniatura' src='".$row['URI']."'><h5 class='text-center'>".$row['Titulo']."</h5></a></div>";
+                        echo "<div class='vistas'>👁<strong>".$row['CantVistas']."</strong></div>";
+                        echo"</div>";
+                    }
                 ?>
             
             </div>
