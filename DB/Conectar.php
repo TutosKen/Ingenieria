@@ -89,6 +89,83 @@ class Conexion{
 
         mysqli_close($conexion);
     }
+
+    function verificarEmail($email){
+        $bandera = False;
+        $conn = $this->Conectar();
+        $em = mysqli_real_escape_string($conn,$email);
+
+        $sql = "Select Email from usuario where Email = '$em'";
+        $result = mysqli_query($conn,$sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            $bandera = True;
+        }
+
+        mysqli_close($conexion);
+        return $bandera;
+
+
+
+    }
+
+    function verificarUsuario($usuario){
+        $bandera = False;
+        $conn = $this->Conectar();
+        $us = mysqli_real_escape_string($conn,$usuario);
+
+        $sql = "Select Nick from usuario where Nick = '$us'";
+        $result = mysqli_query($conn,$sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            $bandera = True;
+        }
+
+        mysqli_close($conexion);
+        return $bandera;
+
+    }
+
+    function verificarCedula($cedula){
+        $bandera = False;
+        $conn = $this->Conectar();
+        $ced = mysqli_real_escape_string($conn,$cedula);
+
+        $sql = "Select Cedula from usuario where Cedula = '$ced'";
+        $result = mysqli_query($conn,$sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            $bandera = True;
+        }
+
+        mysqli_close($conexion);
+        return $bandera;
+
+    }
+
+    function agregarUsuario($nombreR, $apellidoR, $emailR, $cedulaR, $direccionR, $telefonoR, $usuarioR,
+        $passR, $confPassR, $preguntaR, $respuestaR){
+            $conn = $this->Conectar();
+
+                $sql = "INSERT INTO usuario(Nombre,Apellido,Cedula,Direccion,Email,Telefono,Nick,Clave,FK_Pregunta,RespuestaSecreta)
+                VALUES ('$nombreR','$apellidoR','$cedulaR','$direccionR','$emailR','$telefonoR','$usuarioR','$passR','$preguntaR','$respuestaR')";
+
+                    if (mysqli_query($conn,$sql)) {
+                        return True;
+                    }else{
+                        return False;
+                    }
+                
+
+
+            
+        
+    
+            mysqli_close($conexion);
+
+
+    }
+
 }
 
 ?>

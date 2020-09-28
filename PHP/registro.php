@@ -22,39 +22,53 @@ if (isset($_SESSION['usuario'])) {
   <div class="card-body">
     <h5 class="card-title text-center">Animales</h5>
 
-    <form action="acciones.php" method="POST">
         <div class="form-group" id="nombreyap">
             <p>Complete la siguiente informacion</p>
-            <input type="text" name="email" class="form-control" name="nombre" placeholder="Nombre" required>
-            <input type="text" name="email" class="form-control" name="apellido" placeholder="Apellido" required>
+            <input type="text" id="nombreRegistro" class="form-control" placeholder="Nombre">
+            <input type="text" id="apellidoRegistro" class="form-control" placeholder="Apellido">
         </div>
 
         <div class="form-group" id="info-registro">
-            <input type="text" name="cedula" class="form-control fuente-custom" name="cedula" placeholder="Cedula(opcional)">
-            <textarea name="direccion" cols="30" rows="5" class="margen form-control resize-none" placeholder="Direccion(opcional)"></textarea>
-            <input type="text" class="form-control margen" placeholder="Telefono(opcional)">
-            <input type="text" id="User" class="form-control margen" placeholder="Nombre de usuario">
-            <input type="password" class="form-control margen" placeholder="Contraseña">
-            <input type="password" class="form-control margen" placeholder="Confirmar contraseña">
+            <input type="text" id="emailRegistro" class="form-control fuente-custom" placeholder="Correo electronico">
+            <div id="emailExistente" class="alert alert-danger margen" role="alert" style="display:none;">
+                El correo electronico se encuentra en uso
+            </div>
+            <input type="text" id="cedulaRegistro" class="form-control fuente-custom margen" placeholder="Cedula(opcional)">
+            <div id="cedulaExistente" class="alert alert-danger margen" role="alert" style="display:none;">
+            La cedula se encuentra en uso
+            </div>
+            <textarea id="direccionRegistro" cols="30" rows="5" class="margen form-control resize-none" placeholder="Direccion(opcional)"></textarea>
+            <input id="telefonoRegistro" type="text" class="form-control margen" placeholder="Telefono(opcional)">
+            <input type="text" id="usuarioRegistro" class="form-control margen" placeholder="Nombre de usuario">
+            <div id="usuarioExistente" class="alert alert-danger margen" role="alert" style="display:none;">
+                El nombre de usuario se encuentra en uso
+            </div>
+            <input type="password" id="passRegistro" class="form-control margen" placeholder="Contraseña">
+            <input type="password" id="confPassRegistro" class="form-control margen" placeholder="Confirmar contraseña">
+            <div id="contraNoCoincide" class="alert alert-danger margen" role="alert" style="display:none;">
+            Las contraseñas no coinciden
+            </div>
         </div>
 
         <div class="form-group">
-            <select required class="form-control" name="PreguntaSecreta" style="margin-bottom:10px;">
+            <select required class="form-control" id="PreguntaSecretaRegistro" style="margin-bottom:10px;">
                 <option disabled selected hidden>Escoge una pregunta</option>
-                <option>¿Cual es tu libro favorito?</option>
-                <option>¿Cual es tu pelicula favorita?</option>
-                <option>¿Que nombre tenia tu primer mascota?</option>
-                <option>¿En que ciudad naciste?</option>
-                <option>¿Cual fue la primera compañia para la que trabajaste?</option>
+                <option value='1'>¿Cual es tu libro favorito?</option>
+                <option value='2'>¿Cual es tu pelicula favorita?</option>
+                <option value='3'>¿Que nombre tenia tu primer mascota?</option>
+                <option value='4'>¿En que ciudad naciste?</option>
+                <option value='5'>¿Cual fue la primera compañia para la que trabajaste?</option>
             </select>
-            <input type="text" class="form-control" placeholder="Respuesta">
+            <input type="text" id="respuestaRegistro" class="form-control" placeholder="Respuesta" required>
+        </div>
+
+        <div id="camposIncompletos" class="alert alert-danger margen" role="alert" style="display:none;">
+            Debe completar los campos requeridos
         </div>
 
         <div class="text-center">
-            <button type="submit" name="login" class="boton-ln btn btn-sm btn-success">Registrarse</button>
+            <button id="registrarse" class="boton-ln btn btn-sm btn-success">Registrarse</button>
         </div>
-        
-    </form>
     
   </div>
 </div>
@@ -68,8 +82,7 @@ if (isset($_SESSION['usuario'])) {
 </div>
 
     <?php
-        require_once('../JS.php');
-    
+        include('JS.php');
     ?>
 </body>
 </html>
