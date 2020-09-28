@@ -2,47 +2,70 @@
 session_start();
 ?>
 
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <?php 
+    <?php
         require_once('PHP/head.php');
     ?>
-    <title>Iniciar sesion animales</title>
+    <title>Animales</title>
 </head>
-<body>
+    <body>
+        <?php
+            require_once('PHP/navbar.php');
+            require_once('DB/Conectar.php');
+        ?>
+    <main>
 
-<div class="card mx-auto" style="width: 18rem;">
-<img class="card-img-top" src="img/logo.jpg" alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title text-center">Animales</h5>
+        <div class="container tarjeta">
+            <div class="row">
+                <div class="col-12 mt-5">
+                    <input type="text" class="form-control" placeholder="Buscar...">
+                </div>
 
-    <form action="PHP/login-action.php" method="POST">
-        <div class="form-group" id="email-input">
-            <label class="fuente-custom" for="Email">Email</label>
-            <input type="text" name="email" class="form-control form-control-sm" id="Email" placeholder="Correo electronico">
-        </div>
+                <?php                    
+                    $conn = New Conexion;
+                    $conn->getImagenes();
+                ?>
 
-        <div class="form-group" id="pass-input">
-            <label class="fuente-custom" for="Contrasenna">Contraseña</label>
-            <input type="password" name="pass" class="form-control form-control-sm" id="Contrasenna" placeholder="Contraseña">
-        </div>
+                <div class="col-6 col-md-3 mt-5">
+                    <div class="imagen"><a href="#"><img class="miniatura" src="img/airtm.jpg" alt=""><h4 class="text-center">Hola</h4></a></div>
+                </div>
 
-        <div class="text-center">
-            <button type="submit" name="login" class="boton-ln btn btn-sm btn-success">Login</button>
+                <div class="col-6 col-md-3 mt-5">
+                    <div class="imagen"><a href="#"><img class="miniatura" src="img/airtm.jpg" alt=""><h4 class="text-center">Hola</h4></a></div>
+                </div>
+
+                <div class="col-6 col-md-3 mt-5">
+                    <div class="imagen"><a href="#"><img class="miniatura" src="img/airtm.jpg" alt=""><h4 class="text-center">Hola</h4></a></div>
+                </div>
+                
+                <div class="col-6 col-md-3 mt-5">
+                    <div class="imagen"><a href="#"><img class="miniatura" src="img/airtm.jpg" alt=""><h4 class="text-center">Hola</h4></a></div>
+                </div>
+
+                <div class="col-6 col-md-3 mt-5">
+                    <div class="imagen"><a href="#"><img class="miniatura" src="img/airtm.jpg" alt=""><h4 class="text-center">Hola</h4></a></div>
+                </div>
+
+                <div class="col-6 col-md-3 mt-5">
+                    <div class="imagen"><a href="#"><img class="miniatura" src="img/airtm.jpg" alt=""><h4 class="text-center">Hola</h4></a></div>
+                </div>
+
+                <div class="col-6 col-md-3 mt-5">
+                    <div class="imagen"><a href="#"><img class="miniatura" src="img/airtm.jpg" alt=""><h4 class="text-center">Hola</h4></a></div>
+                </div>
+
+            
+            </div>
         </div>
         
-    </form>
-    
-  </div>
-</div>
 
-<div class="card mx-auto" style="width: 18rem;">
-    <div class="card-body">
-        <span class="fuente-custom">Nuevo en animales?</span>
-        <a href="PHP/registro.php" class="fuente-custom">Registrate</a>
-    </div>
 
-</div>
-</body>
+        <?php
+            require_once('PHP/JS.php');
+        ?>
+    </body>
+</main>
 </html>

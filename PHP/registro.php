@@ -14,7 +14,7 @@ session_start();
     <?php
         require_once('navbar.php');
     ?>
-<div class="card mx-auto" style="width: 30rem;">
+<div class="card mx-auto" style="width: 40rem;">
 <img class="card-img-top" src="../img/logo.jpg" alt="Card image cap">
   <div class="card-body">
     <h5 class="card-title text-center">Animales</h5>
@@ -56,10 +56,10 @@ session_start();
   </div>
 </div>
 
-<div class="tarjeta card mx-auto" style="width: 18rem;">
+<div class="tarjeta card mx-auto" style="width: 40rem;">
     <div class="card-body text-center">
         <span class="fuente-custom">Ya tienes cuenta?</span>
-        <a href="/Animales/index.php" class="fuente-custom">Inicia sesion</a>
+        <a href="login.php" class="fuente-custom">Inicia sesion</a>
     </div>
 
 </div>
