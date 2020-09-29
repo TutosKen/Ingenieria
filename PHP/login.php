@@ -23,12 +23,13 @@ if (isset($_SESSION['usuario'])) {
 
         <div class="form-group" id="email-input">
             <label class="fuente-custom" for="Email">Email</label>
-            <input type="text" class="form-control form-control-sm" id="Email" placeholder="Correo electronico">
+            <input type="text" class="form-control form-control-sm" id="Email" placeholder="Email o usuario">
         </div>
 
         <div class="form-group" id="pass-input">
             <label class="fuente-custom" for="Contrasenna">Contraseña</label>
-            <input type="password" class="form-control form-control-sm" id="Contrasenna" placeholder="Contraseña">
+            <input type="password" class="form-control form-control-sm mb-2" id="Contrasenna" placeholder="Contraseña">
+            <a href="recuperarPass.php" class="fuente-custom ml-1">Olvidaste la contraseña?</a>
         </div>
 
         <div id="errorInicioSesion" class="alert alert-danger" role="alert" style="display:none;">

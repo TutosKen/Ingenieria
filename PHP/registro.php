@@ -33,7 +33,7 @@ if (isset($_SESSION['usuario'])) {
             <div id="emailExistente" class="alert alert-danger margen" role="alert" style="display:none;">
                 El correo electronico se encuentra en uso
             </div>
-            <input type="text" id="cedulaRegistro" class="form-control fuente-custom margen" placeholder="Cedula(opcional)">
+            <input type="text" id="cedulaRegistro" class="form-control fuente-custom margen" placeholder="Cedula">
             <div id="cedulaExistente" class="alert alert-danger margen" role="alert" style="display:none;">
             La cedula se encuentra en uso
             </div>

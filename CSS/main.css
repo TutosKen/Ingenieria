@@ -51,6 +51,10 @@ input::placeholder{
     width: 100%;
 }
 
+.boton-mid-len{
+    width: 48%;
+}
+
 .fuente-custom{
     font-size: 15px;
 }

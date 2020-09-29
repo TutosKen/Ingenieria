@@ -38,7 +38,7 @@ class Conexion{
         $miemail = mysqli_real_escape_string($conn,$email);
         $mipass = mysqli_real_escape_string($conn,$pass); 
 
-        $sql = "Select * from usuario WHERE Email = '$miemail' AND Clave = '$mipass'";
+        $sql = "Select * from usuario WHERE (Email = '$miemail' or Nick = '$miemail') AND Clave = '$mipass'";
         $result = mysqli_query($conn,$sql);
 
         if (mysqli_num_rows($result) > 0) {
@@ -155,15 +155,22 @@ class Conexion{
                     }else{
                         return False;
                     }
-                
-
-
-            
-        
     
             mysqli_close($conexion);
 
 
+    }
+
+    function getPreguntaUsuario($email){
+        $conn = $this->Conectar();
+        $sql = "Select * from usuariopregunta where Email = '$email'";
+        $result = mysqli_query($conn,$sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            return $result;
+        }
+
+        mysqli_close($conexion);
     }
 
 }

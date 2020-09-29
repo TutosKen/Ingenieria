@@ -83,7 +83,7 @@ $(document).ready(function(){
 
 
     $("#registrarse").click(function(){
-        if ($("#emailRegistro").val() != "" && $("#nombreRegistro").val() != "" && $("#apellidoRegistro").val()!= "" &&  $("#usuarioRegistro").val() != ""  && $("#passRegistro").val() != "" && $("#confPassRegistro").val() && parseInt($("#PreguntaSecretaRegistro").val()) != 0) {
+        if ($("#emailRegistro").val() != "" && $("#nombreRegistro").val() != "" && $("#apellidoRegistro").val()!= "" &&  $("#usuarioRegistro").val() != ""  && $("#passRegistro").val() != "" && $("#confPassRegistro").val() && parseInt($("#PreguntaSecretaRegistro").val()) != 0 && $("#cedulaRegistro").val() != "") {
             $.post("/Animales/PHP/acciones.php",{
                 Nombre: $("#nombreRegistro").val(),
                 Apellido: $("#apellidoRegistro").val(),
@@ -105,6 +105,50 @@ $(document).ready(function(){
         }else{
             $("#camposIncompletos").show();
         }
+
+    });
+
+    $("#recuperarContra").click(function(){
+        if (!$("#emailRecover").val()) {
+            $("#correoVacio").show();
+        }else{
+            $.post("/Animales/PHP/acciones.php",{
+                respuestaS: $("#respuestaS").val()
+            }, function(data,status){
+                if (data == "Exito") {
+                    $("#correoEnviado").show();
+                    $("#correoNoEnviado").hide();
+                }else{
+                    $("#correoNoEnviado").show();
+                    $("#correoEnviado").hide();
+                }
+            });
+        }
+    });
+
+    $("#emailRecover").keyup(function(){
+        $.post("/Animales/PHP/acciones.php",{
+            emailRecover: $("#emailRecover").val()
+        }, function(data,status){
+            $("#correoVacio").hide();
+            $("#preguntaS").remove();
+            $("#respuestaS").remove();
+            $(data).insertAfter("#emailRecover");
+
+        });
+    });
+
+    $("#limpiarFormRecuperarContra").click(function(){
+        $("#preguntaS").remove();
+        $("#respuestaS").remove();
+        $("#emailRecover").val('');
+
+        $("#correoEnviado").hide();
+        $("#correoVacio").hide();
+        $("#correoNoEnviado").hide();
+
+        $("#emailRecover").removeAttr('disabled');
+
 
     });
  

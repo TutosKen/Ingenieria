@@ -1,15 +1,22 @@
 <?php
 session_start();
-
+//session_unset();
 require_once('../DB/Conectar.php');
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require '../PHPMailer/src/Exception.php';
+require '../PHPMailer/src/PHPMailer.php';
+require '../PHPMailer/src/SMTP.php';
+
 $conn = New Conexion;
 
 if (isset($_POST['email'])) {
-    $email = $_POST['email']; 
+    $emailL = $_POST['email']; 
     $passwd = $_POST['pass'];
     
-    if ($conn->IniciarSesion($email,$passwd)) {
-        $_SESSION['usuario'] = $email;
+    if ($conn->IniciarSesion($emailL,$passwd)) {
+        $_SESSION['usuario'] = $emailL;
         echo "Valido";
     }else{
         echo "Invalido";
@@ -72,5 +79,46 @@ if (isset($_POST['verCedula'])) {
     if ($conn->verificarCedula($cedula)) {
         echo "Existe";
     }
+}
+
+if (isset($_POST['emailRecover'])) {
+    $_SESSION['emailRecuperacion'] = $_POST['emailRecover'];
+    $result = $conn->getPreguntaUsuario($_SESSION['emailRecuperacion']);
+
+        while($row = mysqli_fetch_assoc($result)) {
+            echo "<script>document.getElementById('emailRecover').setAttribute('disabled','')</script>";
+            echo"<label id='preguntaS' class='fuente-custom mt-3 mb-2' for='respuestaS'>".$row['Pregunta']."</label>";
+            echo"<input type='text' class='form-control form-control-sm' id='respuestaS' placeholder='Respuesta'>";
+            $_SESSION['respuestaCorrecta'] = $row['RespuestaSecreta'];
+            $_SESSION['Clave'] = $row['Clave'];
+            
+        }
+}
+
+if (isset($_POST['respuestaS'])) {
+    $res = trim($_POST['respuestaS']);
+
+    if ($res == $_SESSION['respuestaCorrecta']) {  
+            $mail = New PHPMailer(true);
+            $mail->IsSMTP();
+            try {
+                $mail->From = "tutos1620@gmail.com";
+                $mail->SMTPAuth = true;
+                $mail->SMTPSecure = 'tls'; //seguridad
+                $mail->Host = "smtp.gmail.com"; // servidor smtp
+                $mail->Port = 587; //puerto
+                $mail->Username ='tutos1620@gmail.com'; //nombre usuario
+                $mail->Password = 'keneth155tutos'; //contraseña
+        
+                $mail->AddAddress($_SESSION['emailRecuperacion'],'Admin@animales.com');
+                $mail->Subject = 'Recuperacion de contrasenna';
+                $mail->Body = 'Tu contraseña es: '.$_SESSION['Clave'];
+        
+                $mail->send();
+                echo "Exito";
+            } catch (Exception $e) {
+                echo "El mensaje no se pudo enviar. Error: {$mail->ErrorInfo}";
+            }      
+        }
 }
 ?>
