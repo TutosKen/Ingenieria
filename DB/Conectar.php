@@ -146,7 +146,7 @@ class Conexion{
     function agregarUsuario($nombreR, $apellidoR, $emailR, $cedulaR, $direccionR, $telefonoR, $usuarioR,
         $passR, $confPassR, $preguntaR, $respuestaR){
             $conn = $this->Conectar();
-
+                
                 $sql = "INSERT INTO usuario(Nombre,Apellido,Cedula,Direccion,Email,Telefono,Nick,Clave,FK_Pregunta,RespuestaSecreta)
                 VALUES ('$nombreR','$apellidoR','$cedulaR','$direccionR','$emailR','$telefonoR','$usuarioR','$passR','$preguntaR','$respuestaR')";
 
