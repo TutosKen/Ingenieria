@@ -27,7 +27,7 @@ class Conexion{
             return $result;
         }
 
-        mysqli_close($conexion);
+        mysqli_close($conn);
     }
 
 
@@ -42,7 +42,7 @@ class Conexion{
         $result = mysqli_query($conn,$sql);
 
 
-        mysqli_close($conexion);
+        mysqli_close($conn);
         return $result;
     }
 
@@ -64,7 +64,7 @@ class Conexion{
         }else{
             echo "<h4 class='ml-3 mt-3' id='noResult'>No se encontraron resultados</h4>";
         }
-        mysqli_close($conexion);
+        mysqli_close($conn);
     }
 
     function getImagen($ID){
@@ -76,7 +76,7 @@ class Conexion{
             return $result;
         }
 
-        mysqli_close($conexion);
+        mysqli_close($conn);
     }
 
     function aumentarCantVisitas($ID){
@@ -84,7 +84,7 @@ class Conexion{
         $sql = "UPDATE post set CantVistas = CantVistas + 1 where IDPost = '$ID'";
         mysqli_query($conn,$sql);
 
-        mysqli_close($conexion);
+        mysqli_close($conn);
     }
 
     function verificarEmail($email){
@@ -99,7 +99,7 @@ class Conexion{
             $bandera = True;
         }
 
-        mysqli_close($conexion);
+        mysqli_close($conn);
         return $bandera;
 
 
@@ -118,7 +118,7 @@ class Conexion{
             $bandera = True;
         }
 
-        mysqli_close($conexion);
+        mysqli_close($conn);
         return $bandera;
 
     }
@@ -135,7 +135,7 @@ class Conexion{
             $bandera = True;
         }
 
-        mysqli_close($conexion);
+        mysqli_close($conn);
         return $bandera;
 
     }
@@ -153,7 +153,7 @@ class Conexion{
                         return False;
                     }
     
-            mysqli_close($conexion);
+            mysqli_close($conn);
 
 
     }
@@ -167,7 +167,7 @@ class Conexion{
             return $result;
         }
 
-        mysqli_close($conexion);
+        mysqli_close($conn);
     }
 
     function getInfoUsuario($id){
@@ -179,7 +179,7 @@ class Conexion{
             return $result;
         }
 
-        mysqli_close($conexion);
+        mysqli_close($conn);
     }
 
     function getCantPosts($id){
@@ -193,7 +193,7 @@ class Conexion{
             }
         }
 
-        mysqli_close($conexion);
+        mysqli_close($conn);
         return $cantPosts;
     }
 
@@ -207,7 +207,7 @@ class Conexion{
             return $result;
         }
 
-        mysqli_close($conexion);
+        mysqli_close($conn);
     }
 
     function actualizarUsuario($nombreR, $apellidoR, $emailR, $cedulaR, $direccionR, $telefonoR, $usuarioR,
@@ -223,10 +223,79 @@ class Conexion{
                     return False;
                 }
 
-        mysqli_close($conexion);
+        mysqli_close($conn);
 
 
-}
+    }
+
+    function getImagenesFiltro($filtro){
+        $conn = $this->Conectar();
+        $sql = "select p.Titulo, p.Descripcion, p.Fecha_publicacion, p.CantVistas, p.Tags, p.URI, c.Nombre from post as p JOIN postxcategoria pc on 
+        p.IDPost = pc.FK_Post JOIN categoria as c on c.IDCategoria = '$filtro'";
+        $result = mysqli_query($conn,$sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            return $result;
+        }
+
+        mysqli_close($conn);
+
+    }
+
+
+    function getCategorias(){
+        $conn = $this->Conectar();
+        $sql = "SELECT * from categoria";
+        $result = mysqli_query($conn,$sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            return $result;
+        }
+
+        mysqli_close($conn);
+
+    }
+
+    function getCatPorNombre($nombre){
+        $conn = $this->Conectar();
+        $sql = "SELECT * from categoria where Nombre ='$nombre'";
+        $result = mysqli_query($conn,$sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            while($row = mysqli_fetch_assoc($result)) {
+                $IDCat = $row['IDCategoria'];
+            }
+        }
+
+        mysqli_close($conn);
+        return $IDCat;
+
+    }
+
+    function getPostFiltrados($nombre){
+        $conn = $this->Conectar();
+        $id = $this->getCatPorNombre($nombre);
+
+        $sql = "select p.IDPost, p.Titulo, p.Descripcion, p.Fecha_publicacion, p.CantVistas,p.Tags, p.FK_Usuario, p.FK_Usuario, p.URI from post
+         as p join postxcategoria as pc on pc.FK_Post = p.IDPost where pc.FK_Categoria = '$id'";
+        $result = mysqli_query($conn,$sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            while($row = mysqli_fetch_assoc($result)) {
+                echo "<div class='col-6 col-md-3 mt-5'>";
+                echo "<div class='imagen'><a href='/Animales/PHP/Post.php?IDimagen=".$row['IDPost']."'><img class='miniatura' src='".$row['URI']."'><h5 class='text-center'>".$row['Titulo']."</h5></a></div>";
+                echo "<div class='vistas'>👁<strong>".$row['CantVistas']."</strong></div>";
+                echo"</div>";
+            }
+        
+        }else{
+            echo "<h4 class='ml-3 mt-3' id='noResult'>No se encontraron resultados</h4>";
+        }
+        mysqli_close($conn);
+    }
+
+
+
 
 }
 

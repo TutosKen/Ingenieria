@@ -40,6 +40,11 @@ if (isset($_POST['busqueda'])) {
     echo $conn->buscar($str);
 }
 
+if (isset($_POST['NombreCat'])) {
+    $str = $_POST['NombreCat'];
+    echo $conn->getPostFiltrados($str);
+}
+
 
 if (isset($_POST['Nombre'])) {
     $nombreR = $_POST['Nombre'];

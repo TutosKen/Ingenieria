@@ -15,17 +15,34 @@ session_start();
         <?php
             require_once('PHP/navbar.php');
             require_once('DB/Conectar.php');
+            $conn = New Conexion;
         ?>
     <main>
 
         <div class="container tarjeta">
             <div class="row">
-                <div id="barraBusqueda" class="col-12 mt-5">
+                <div id="barraBusqueda" class="col-9 mt-5">
                     <input id="buscar" type="text" class="form-control" placeholder="Buscar...">
                 </div>
 
+
+                <div id="btnFiltro" class="col-3 mt-5 dropdown">
+                    <button class="btn btn-info btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="img/imgsPagina/filtro.png" alt="" height="20"></button>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                    <?php 
+                    $filtro = $conn->getCategorias();
+
+                    while($row = mysqli_fetch_assoc($filtro)) {
+                        echo "<a href='javascript:{}' class='dropdown-item' style='color:black !important'>".$row['Nombre']."</a>";
+                    }
+
+                    ?>
+
+                </div>
+                </div>
+                
+
                 <?php                    
-                    $conn = New Conexion;
                     $result = $conn->getImagenes();
 
                     while($row = mysqli_fetch_assoc($result)) {

@@ -19,7 +19,18 @@ $(document).ready(function(){
         }, function(data,status){
             $("#noResult").remove();
             $(".col-md-3").remove();
-            $(data).insertAfter("#barraBusqueda");
+            $(data).insertAfter("#btnFiltro");
+        });
+    });
+
+    $(".dropdown-item").click(function() {
+        var nombreCat = $(this).html();
+        $.post("/Animales/PHP/acciones.php",{
+            NombreCat: nombreCat
+        }, function(data,status){
+            $("#noResult").remove();
+            $(".col-md-3").remove();
+            $(data).insertAfter("#btnFiltro");
         });
     });
 
