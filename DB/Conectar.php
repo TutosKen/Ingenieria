@@ -309,6 +309,35 @@ class Conexion{
     }
 
 
+    function agregarImagen($titulo,$descripcion,$tags,$FK_Usuario,$URI,$cats){
+        $conn = $this->Conectar();
+                
+        $sql = "INSERT INTO post(Titulo,Descripcion,Tags,FK_Usuario,URI) VALUES('$titulo','$descripcion','$tags','$FK_Usuario','$URI');";
+
+            if (mysqli_query($conn,$sql)) {
+                return True;
+            }else{
+                return False;
+            }
+
+    mysqli_close($conn);
+    }
+
+    function getImagenPorURI($URI){
+        $conn = $this->Conectar();
+        $sql = "SELECT * from post where URI ='$URI'";
+        $result = mysqli_query($conn,$sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            return True;
+        }else{
+            return False;
+        }
+
+        mysqli_close($conn);
+    }
+
+
 
 
 }

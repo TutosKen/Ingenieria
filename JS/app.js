@@ -220,5 +220,15 @@ $(document).ready(function(){
             }
         });
     });
+
+    $("#URI").keyup(function() {
+        var imagen = $("#preview");
+
+        if ($("#URI").val() == '') {
+            imagen.attr("src","/Animales/img/imgsPagina/default.jpg");
+        }else{
+            imagen.attr("src",$("#URI").val());   
+        }
+    });
  
 });

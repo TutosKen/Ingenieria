@@ -52,7 +52,7 @@ input::placeholder{
 }
 
 .boton-mid-len{
-    width: 48%;
+    width: 48% !important;
 }
 
 .fuente-custom{
@@ -337,4 +337,65 @@ input::placeholder{
     @-ms-keyframes fadeIn {
     0% {opacity:0;}
     100% {opacity:1;}
+    }
+
+    textarea{
+        resize: none!important;
+    }
+
+    .subirImagen{
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+    }
+
+    .esconder{
+        display: none;
+    }
+
+
+    .estiloLabel{
+        background-color: #f0ad4e;
+        padding: 5px;
+        border-radius: 4px;
+    }
+
+    .estiloLabel:hover{
+        cursor: pointer;
+    }
+
+    .fuenteCheck{
+        font-size:16px;
+    }
+
+    .inputRes{
+        width: 100%;
+    }
+
+    @media only screen and (max-width:550px){
+        .inputRes{
+            margin-left: 50px;
+            width: 185px !important;
+        }
+    }
+
+
+    @media only screen and (max-width:996px){
+
+        .fuenteCheck{
+            font-size:13px;
+        }
+    }
+
+
+    @media only screen and (max-width:600px){
+
+        .fuenteCheck{
+            font-size:10.5px;
+        }
+    }
+
+
+    .checkHover:hover{
+        cursor: pointer;
     }
