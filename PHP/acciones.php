@@ -43,6 +43,8 @@ if (isset($_POST['busqueda'])) {
 if (isset($_POST['NombreCat'])) {
     $str = $_POST['NombreCat'];
     echo $conn->getPostFiltrados($str);
+    
+    
 }
 
 
@@ -180,5 +182,14 @@ if (isset($_POST['respuestaS'])) {
                 echo "El mensaje no se pudo enviar. Error: {$mail->ErrorInfo}";
             }      
         }
+}
+
+if (isset($_POST['EliminarCuenta'])) {
+    $idElim = $_SESSION['IDUsuario'];
+    
+    if ($conn->eliminarCuenta($idElim)) {
+        session_unset();
+        echo "Exito";
+    }
 }
 ?>

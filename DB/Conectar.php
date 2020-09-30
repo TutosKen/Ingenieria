@@ -294,6 +294,20 @@ class Conexion{
         mysqli_close($conn);
     }
 
+    function eliminarCuenta($id){
+        $conn = $this->Conectar();
+            
+        $sql = "DELETE FROM usuario where IDUsuario = '$id'";
+
+            if (mysqli_query($conn,$sql)) {
+                return True;
+            }else{
+                return False;
+            }
+
+    mysqli_close($conn);
+    }
+
 
 
 

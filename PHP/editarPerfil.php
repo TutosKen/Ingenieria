@@ -86,10 +86,43 @@ session_start();
             <button id="modificarUsuario" class="boton-ln btn btn-sm btn-success">Editar</button>
             <button class="boton-ln btn btn-sm btn-danger mt-2" onclick="window.location.replace('/Animales/PHP/perfil.php?IDUsuario=<?php echo $_SESSION['IDUsuario'];?>');">Cancelar</button>
         </div>
+
             
 
     </div>
+
 </div>
+
+        <div class="tarjeta card mx-auto border-primary" style="width: 40rem;">
+            <div class="card-body text-center">
+                <p>Quieres eliminar tu cuenta?</p>
+                <button class="btn boton-ln btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal">
+                    Eliminar cuenta
+                </button>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmar eliminacion de cuenta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Al eliminar tu cuenta se eliminaran tambien tus fotos y comentarios.
+                Deseas continuar?
+            </div>
+            <div class="modal-footer">
+                <button id="eliminarCuenta" type="button" class="btn btn-success">Confirmar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+            </div>
+        </div>
+        </div>
 
     <?php
         include('JS.php');

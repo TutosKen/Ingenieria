@@ -210,5 +210,15 @@ $(document).ready(function(){
 
 
     });
+
+    $("#eliminarCuenta").click(function() {
+        $.post("/Animales/PHP/acciones.php",{
+            EliminarCuenta: 'true'
+        }, function(data,status){
+            if (data == "Exito") {
+                window.location.replace("/Animales/");
+            }
+        });
+    });
  
 });

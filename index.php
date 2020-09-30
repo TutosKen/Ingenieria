@@ -31,6 +31,7 @@ session_start();
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                     <?php 
                     $filtro = $conn->getCategorias();
+                    echo "<a href='/Animales/' class='dropdown-item' style='color:black !important'>Todos</a>";
 
                     while($row = mysqli_fetch_assoc($filtro)) {
                         echo "<a href='javascript:{}' class='dropdown-item' style='color:black !important'>".$row['Nombre']."</a>";
