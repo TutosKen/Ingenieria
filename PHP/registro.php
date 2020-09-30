@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (isset($_SESSION['usuario'])) {
+if (isset($_SESSION['IDUsuario'])) {
     header('location: /Animales/');
 }
 ?>
@@ -39,7 +39,7 @@ if (isset($_SESSION['usuario'])) {
             </div>
             <textarea id="direccionRegistro" cols="30" rows="5" class="margen form-control resize-none" placeholder="Direccion(opcional)"></textarea>
             <input id="telefonoRegistro" type="text" class="form-control margen" placeholder="Telefono(opcional)">
-            <input type="text" id="usuarioRegistro" class="form-control margen" placeholder="Nombre de usuario">
+            <input type="text" id="usuarioRegistro" class="form-control margen" placeholder="Nombre de usuario" maxlength="25">
             <div id="usuarioExistente" class="alert alert-danger margen" role="alert" style="display:none;">
                 El nombre de usuario se encuentra en uso
             </div>
@@ -66,7 +66,7 @@ if (isset($_SESSION['usuario'])) {
             Debe completar los campos requeridos
         </div>
 
-        <div class="text-center">
+        <div id="contBtnRegistro" class="text-center" style="padding:5px;">
             <button id="registrarse" class="boton-ln btn btn-sm btn-success">Registrarse</button>
         </div>
     

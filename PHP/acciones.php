@@ -14,9 +14,16 @@ $conn = New Conexion;
 if (isset($_POST['email'])) {
     $emailL = $_POST['email']; 
     $passwd = $_POST['pass'];
-    
-    if ($conn->IniciarSesion($emailL,$passwd)) {
-        $_SESSION['usuario'] = $emailL;
+
+    $bandera = $conn->IniciarSesion($emailL,$passwd);
+
+    if (mysqli_num_rows($bandera) > 0) {
+        while ($fila = mysqli_fetch_assoc($bandera)) {
+            $_SESSION['IDUsuario'] = $fila['IDUsuario'];
+            $_SESSION['email'] = $fila['Email'];
+            $_SESSION['NombreUsuario'] = $fila['Nick'];
+            $_SESSION['cedula'] = $fila['Cedula'];
+        }
         echo "Valido";
     }else{
         echo "Invalido";
@@ -43,13 +50,44 @@ if (isset($_POST['Nombre'])) {
     $telefonoR = $_POST['Telefono'];
     $usuarioR = $_POST['UsuarioR'];
     $passR = $_POST['Pass'];
-    $confPassR = $_POST['ConfPass'];
     $preguntaR = $_POST['Pregunta'];
     $respuestaR = $_POST['Respuesta'];
 
     if ($conn->agregarUsuario($nombreR, $apellidoR, $emailR, $cedulaR, $direccionR, $telefonoR, $usuarioR,
-    $passR, $confPassR, $preguntaR, $respuestaR)) {
-        $_SESSION['usuario'] = $emailR;
+    $passR, $preguntaR, $respuestaR)) {
+
+        $flag = $conn->IniciarSesion($emailR,$passR);
+
+        if (mysqli_num_rows($flag) > 0) {
+            while ($filar = mysqli_fetch_assoc($flag)) {
+                $_SESSION['IDUsuario'] = $filar['IDUsuario'];
+                $_SESSION['email'] = $fila['Email'];
+                $_SESSION['NombreUsuario'] = $fila['Nick'];
+                $_SESSION['cedula'] = $fila['Cedula'];
+            }
+        }
+
+        echo "Exito";
+
+    }
+}
+
+if (isset($_POST['NombreEditado'])) {
+    $nombreR = $_POST['NombreEditado'];
+    $apellidoR = $_POST['Apellido'];
+    $emailR = $_POST['Email'];
+    $cedulaR = $_POST['Cedula'];
+    $direccionR = $_POST['Direccion'];
+    $telefonoR = $_POST['Telefono'];
+    $usuarioR = $_POST['UsuarioR'];
+    $passR = $_POST['Pass'];
+    $preguntaR = $_POST['Pregunta'];
+    $respuestaR = $_POST['Respuesta'];
+    $idR = $_SESSION['IDUsuario'];
+
+    if ($conn->actualizarUsuario($nombreR, $apellidoR, $emailR, $cedulaR, $direccionR, $telefonoR, $usuarioR,
+    $passR, $preguntaR, $respuestaR,$idR)) {
+
         echo "Exito";
 
     }
@@ -60,8 +98,15 @@ if (isset($_POST['verEmail'])) {
     $email = $_POST['verEmail'];
 
     if ($conn->verificarEmail($email)) {
+        if ($_SESSION['IDUsuario'] != '') {
+            if ($email == $_SESSION['email']) {
+                echo "PerteneceAlUsuario";
+            }
+        }
+
         echo "Existe";
     }
+    
 }
 
 
@@ -69,6 +114,11 @@ if (isset($_POST['verUsuario'])) {
     $usuario = $_POST['verUsuario'];
 
     if ($conn->verificarUsuario($usuario)) {
+        if ($_SESSION['IDUsuario'] != '') {
+            if ($usuario == $_SESSION['NombreUsuario']) {
+                echo "PerteneceAlUsuario";
+            }
+        }
         echo "Existe";
     }
 }
@@ -77,6 +127,11 @@ if (isset($_POST['verCedula'])) {
     $cedula = $_POST['verCedula'];
 
     if ($conn->verificarCedula($cedula)) {
+        if ($_SESSION['IDUsuario'] != '') {
+            if ($cedula == $_SESSION['cedula']) {
+                echo "PerteneceAlUsuario";
+            }
+        }
         echo "Existe";
     }
 }

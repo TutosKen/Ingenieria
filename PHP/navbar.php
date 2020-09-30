@@ -42,7 +42,7 @@
       </li>
 
       <li id="perfil" class="nav-item-custom">
-        <a href="#" class="nav-link-custom">
+        <a href="/Animales/PHP/perfil.php?Usuario=<?php echo $_SESSION['IDUsuario']?>" class="nav-link-custom">
         <svg class="svg-icon" viewBox="0 0 20 20">
                             <path 
                             fill="currentColor"
@@ -76,7 +76,7 @@
       </li>
 
       <li id="logout" class="nav-item-custom">
-      <form id="salir" method="POST" action="PHP/acciones.php">
+      <form id="salir" method="POST" action="/Animales/PHP/acciones.php">
         <a href="javascript:{}" onclick="document.getElementById('salir').submit();" class="nav-link-custom">
         <input type="hidden" name="logout">
         <svg class="svg-icon" viewBox="0 0 20 20">
@@ -102,7 +102,7 @@
 </nav>
 
 <?php
-  if (!isset($_SESSION['usuario'])) {
+  if (!isset($_SESSION['IDUsuario'])) {
     echo "<script>var perfil = document.getElementById('perfil').style.display = 'none';</script>";
     echo "<script>var perfil = document.getElementById('logout').style.display = 'none';</script>";
     echo "<script>var perfil = document.getElementById('post').style.display = 'none';</script>";

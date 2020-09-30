@@ -41,12 +41,9 @@ class Conexion{
         $sql = "Select * from usuario WHERE (Email = '$miemail' or Nick = '$miemail') AND Clave = '$mipass'";
         $result = mysqli_query($conn,$sql);
 
-        if (mysqli_num_rows($result) > 0) {
-            $bandera = True;
-        }
 
         mysqli_close($conexion);
-        return $bandera;
+        return $result;
     }
 
 
@@ -144,7 +141,7 @@ class Conexion{
     }
 
     function agregarUsuario($nombreR, $apellidoR, $emailR, $cedulaR, $direccionR, $telefonoR, $usuarioR,
-        $passR, $confPassR, $preguntaR, $respuestaR){
+        $passR, $preguntaR, $respuestaR){
             $conn = $this->Conectar();
                 
                 $sql = "INSERT INTO usuario(Nombre,Apellido,Cedula,Direccion,Email,Telefono,Nick,Clave,FK_Pregunta,RespuestaSecreta)
@@ -172,6 +169,64 @@ class Conexion{
 
         mysqli_close($conexion);
     }
+
+    function getInfoUsuario($id){
+        $conn = $this->Conectar();
+        $sql = "select * from usuario WHERE IDUsuario = '$id'";
+        $result = mysqli_query($conn,$sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            return $result;
+        }
+
+        mysqli_close($conexion);
+    }
+
+    function getCantPosts($id){
+        $conn = $this->Conectar();
+        $sql = "select count(*) as cantPosts from postusuario WHERE FK_Usuario = '$id'";
+        $result = mysqli_query($conn,$sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            while($row = mysqli_fetch_assoc($result)) {
+                $cantPosts = $row['cantPosts'];
+            }
+        }
+
+        mysqli_close($conexion);
+        return $cantPosts;
+    }
+
+
+    function getPostsUsuario($id){
+        $conn = $this->Conectar();
+        $sql = "select * from postusuario WHERE FK_Usuario = '$id'";
+        $result = mysqli_query($conn,$sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            return $result;
+        }
+
+        mysqli_close($conexion);
+    }
+
+    function actualizarUsuario($nombreR, $apellidoR, $emailR, $cedulaR, $direccionR, $telefonoR, $usuarioR,
+    $passR , $preguntaR, $respuestaR,$id){
+        $conn = $this->Conectar();
+            
+            $sql = "UPDATE usuario set Nombre = '$nombreR', Apellido = '$apellidoR', Cedula = '$cedulaR', Direccion = '$direccionR', Email = '$emailR', 
+            Telefono = '$telefonoR', Nick = '$usuarioR', Clave = '$passR', FK_Pregunta = '$preguntaR', RespuestaSecreta = '$respuestaR' WHERE IDUsuario = '$id'";
+
+                if (mysqli_query($conn,$sql)) {
+                    return True;
+                }else{
+                    return False;
+                }
+
+        mysqli_close($conexion);
+
+
+}
 
 }
 

@@ -23,7 +23,7 @@ $(document).ready(function(){
         });
     });
 
-    $("#emailRegistro").focusout(function(){
+    $("#emailRegistro").keyup(function(){
         $.post("/Animales/PHP/acciones.php",{
             verEmail: $("#emailRegistro").val()
         }, function(data,status){
@@ -35,7 +35,7 @@ $(document).ready(function(){
         });
     });
 
-    $("#usuarioRegistro").focusout(function(){
+    $("#usuarioRegistro").keyup(function(){
         $.post("/Animales/PHP/acciones.php",{
             verUsuario: $("#usuarioRegistro").val()
         }, function(data,status){
@@ -47,7 +47,7 @@ $(document).ready(function(){
         });
     });
 
-    $("#cedulaRegistro").focusout(function(){
+    $("#cedulaRegistro").keyup(function(){
         $.post("/Animales/PHP/acciones.php",{
             verCedula: $("#cedulaRegistro").val()
         }, function(data,status){
@@ -59,7 +59,7 @@ $(document).ready(function(){
         });
     });
 
-    $("#confPassRegistro").focusout(function(){
+    $("#confPassRegistro").keyup(function(){
         var pass = $("#passRegistro").val();
         var confPass = $("#confPassRegistro").val();
 
@@ -70,7 +70,7 @@ $(document).ready(function(){
         }
     });
     
-    $("#passRegistro").focusout(function(){
+    $("#passRegistro").keyup(function(){
         var pass = $("#passRegistro").val();
         var confPass = $("#confPassRegistro").val();
 
@@ -81,6 +81,55 @@ $(document).ready(function(){
         }
     });
 
+    $("#contBtnRegistro").mouseover(function() {
+        if ($("#emailExistente").is(":visible") || $("#usuarioExistente").is(":visible") || $("#cedulaExistente").is(":visible") || $("#contraNoCoincide").is(":visible")) {
+            $("#registrarse").attr('disabled','');
+        }else{
+            $("#registrarse").removeAttr('disabled');
+        }
+    });
+
+    $("#contBtnModificar").mouseover(function() {
+        if ($("#emailExistente").is(":visible") || $("#usuarioExistente").is(":visible") || $("#cedulaExistente").is(":visible") || $("#contraNoCoincide").is(":visible")) {
+            $("#modificarUsuario").attr('disabled','');
+        }else{
+            $("#modificarUsuario").removeAttr('disabled');
+        }
+    });
+
+    $("#modificarPerfil").click(function() {
+        window.location.replace("/Animales/PHP/editarPerfil.php");
+    });
+
+
+    $("#contBtnModificar").focusout(function(){
+        $("#infoModificada").hide();
+    });
+
+    $("#modificarUsuario").click(function(){
+        if ($("#emailRegistro").val() != "" && $("#nombreRegistro").val() != "" && $("#apellidoRegistro").val()!= "" &&  $("#usuarioRegistro").val() != ""  && $("#passRegistro").val() != "" && $("#confPassRegistro").val() && parseInt($("#PreguntaSecretaRegistro").val()) != 0 && $("#cedulaRegistro").val() != "") {
+            $.post("/Animales/PHP/acciones.php",{
+                NombreEditado: $("#nombreRegistro").val(),
+                Apellido: $("#apellidoRegistro").val(),
+                Email: $("#emailRegistro").val(),
+                Cedula: $("#cedulaRegistro").val(),
+                Direccion: $("#direccionRegistro").val(),
+                Telefono: $("#telefonoRegistro").val(),
+                UsuarioR: $("#usuarioRegistro").val(),
+                Pass: $("#passRegistro").val(),
+                ConfPass: $("#confPassRegistro").val(),
+                Pregunta: parseInt($("#PreguntaSecretaRegistro").val()), 
+                Respuesta: $("#respuestaRegistro").val()
+                
+            }, function(data,status){
+                if (data == "Exito") {
+                    $("#infoModificada").show();
+                }
+            });   
+        }else{
+            $("#camposIncompletos").show();
+        }
+    });
 
     $("#registrarse").click(function(){
         if ($("#emailRegistro").val() != "" && $("#nombreRegistro").val() != "" && $("#apellidoRegistro").val()!= "" &&  $("#usuarioRegistro").val() != ""  && $("#passRegistro").val() != "" && $("#confPassRegistro").val() && parseInt($("#PreguntaSecretaRegistro").val()) != 0 && $("#cedulaRegistro").val() != "") {
@@ -93,7 +142,6 @@ $(document).ready(function(){
                 Telefono: $("#telefonoRegistro").val(),
                 UsuarioR: $("#usuarioRegistro").val(),
                 Pass: $("#passRegistro").val(),
-                ConfPass: $("#confPassRegistro").val(),
                 Pregunta: parseInt($("#PreguntaSecretaRegistro").val()), 
                 Respuesta: $("#respuestaRegistro").val()
                 
