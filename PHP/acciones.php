@@ -193,18 +193,13 @@ if (isset($_POST['EliminarCuenta'])) {
     }
 }
 
+    // $uri = $_POST['URIn'];
+    // $titulo = $_POST['titulo'];
+    // $desc = $_POST['desc'];
+    // $tags = $_POST['tags'];
+    // $cats = $_POST['Cat'];
 
-if(isset($_POST['agregarImagen'])){
-    $imagen = $_FILES['subirImg']['tmp_name'];
-    $uri = $_POST['URIn'];
-    $titulo = $_POST['titulo'];
-    $desc = $_POST['desc'];
-    $tags = $_POST['tags'];
-    $cats = $_POST['Cat'];
-
-    if ($conn->agregarImagen($titulo, $desc, $tags, $_SESSION['IDUsuario'],$uri,$cats)) {
-        echo "Exito";
-    }
-
-}
+    // if ($conn->agregarImagen($titulo, $desc, $tags, $_SESSION['IDUsuario'],$uri,$cats)) {
+    //     echo "Exito";
+    // }
 ?>

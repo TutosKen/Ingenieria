@@ -31,7 +31,7 @@ session_start();
                             echo "<h2>".$row['Titulo']."</h2>";
                             echo "<div class='divImagenCompleta'><img class='imagenCompleta' src='".$row['URI']."'></div>";
                             echo "<div class='card bg-transparent border-dark' style='width: 100%;''>";
-                            echo "<div class='card-header'>Usuario: ".$row['Nick'].", ".$row['Fecha_publicacion']."</div>";
+                            echo "<div class='card-header'>Usuario: ".$row['Nick'].", ".explode(' ',$row['Fecha_publicacion'])[0]."</div>";
                             echo "<div class='card-body'>".$row['Descripcion']."";
                             echo "<h5 class='mt-2'>Tags</h5>";
                             echo "<p>".$row['Tags']."</p>";

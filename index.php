@@ -34,7 +34,7 @@ session_start();
                     echo "<a href='/Animales/' class='dropdown-item' style='color:black !important'>Todos</a>";
 
                     while($row = mysqli_fetch_assoc($filtro)) {
-                        echo "<a href='javascript:{}' class='dropdown-item' style='color:black !important'>".$row['Nombre']."</a>";
+                        echo "<a href='javascript:{}' class='dropdown-item especial' style='color:black !important'>".$row['Nombre']."</a>";
                     }
 
                     ?>

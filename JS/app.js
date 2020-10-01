@@ -23,7 +23,7 @@ $(document).ready(function(){
         });
     });
 
-    $(".dropdown-item").click(function() {
+    $(".especial").click(function() {
         var nombreCat = $(this).html();
         $.post("/Animales/PHP/acciones.php",{
             NombreCat: nombreCat
@@ -223,6 +223,7 @@ $(document).ready(function(){
 
     $("#URI").keyup(function() {
         var imagen = $("#preview");
+        $("#subirImagen").val('');
 
         if ($("#URI").val() == '') {
             imagen.attr("src","/Animales/img/imgsPagina/default.jpg");
@@ -230,5 +231,89 @@ $(document).ready(function(){
             imagen.attr("src",$("#URI").val());   
         }
     });
+
+    $("#agregarImagen").click(function (){
+        var cats = [];
+        var fd = new FormData(); 
+        var tituloImg  = $("#titulo").val();
+        var URIImg = $("#URI").val();
+        var descImg = $("#desc").val();
+        var tagsImg = $("#tags").val();
+        var files = $('#subirImagen')[0].files[0]; 
+
+        $('input:checked').each(function (){
+            cats.push($(this).val());
+        });
+        cats.join(',');
+
+        fd.append('file', files); 
+        fd.append('cat',cats);
+        fd.append('titulo',tituloImg);
+        fd.append('URI',URIImg);
+        fd.append('desc',descImg);
+        fd.append('tags',tagsImg);
+
+        $.ajax({ 
+            url: '/Animales/PHP/agregarImagen.php', 
+            type: 'post', 
+            data: fd, 
+            contentType: false, 
+            processData: false, 
+            success: function(response){ 
+                if(response != 0){ 
+                    $("#publicacionCorrecta").show();
+                } 
+                else{ 
+                    $("#errorSubida").show();
+                } 
+            }, 
+        }); 
+
+        $("#subirImagen").val('');
+        $("#URI").val('');
+        $("#titulo").val('');
+        $("#desc").val('');
+        $("#tags").val('');
+        $("input:checked").prop("checked", false);
+        $("#preview").attr('src','/Animales/img/imgsPagina/default.jpg')
+
+    });
+
+
+    $("#subirImagen").click(function() {
+        $("#URI").val('');
+    });
  
+
+    $("#SubidaPost").mouseover(function(){
+        if ((!$('#subirImagen').val() && !$("#URI").val()) || !$("#titulo").val() || $('input:checkbox:checked').length == 0) {
+            $("#agregarImagen").attr('disabled','');
+        }else{
+            $("#agregarImagen").removeAttr('disabled');
+        }
+    });
+
+    $("#SubidaPost").mouseover(function(){
+        if ($('input:checkbox:checked').length == 0) {
+            $("#errorCat").show();
+        }else{
+            $("#errorCat").hide();
+        }
+    });
+
+    $("#URI").focusout(function(){
+        if ((!$('#subirImagen').val() && !$("#URI").val())){
+            $("#errorArchivo").show();
+        }else{
+            $("#errorArchivo").hide();
+        }
+    });
+
+    $("#titulo").focusout(function(){
+        if (!$("#titulo").val()) {
+            $("#errorTitulo").show();
+        }else{
+            $("#errorTitulo").hide();
+        }
+    });
 });

@@ -309,7 +309,7 @@ class Conexion{
     }
 
 
-    function agregarImagen($titulo,$descripcion,$tags,$FK_Usuario,$URI,$cats){
+    function agregarImagen($titulo,$descripcion,$tags,$FK_Usuario,$URI){
         $conn = $this->Conectar();
                 
         $sql = "INSERT INTO post(Titulo,Descripcion,Tags,FK_Usuario,URI) VALUES('$titulo','$descripcion','$tags','$FK_Usuario','$URI');";
@@ -327,14 +327,46 @@ class Conexion{
         $conn = $this->Conectar();
         $sql = "SELECT * from post where URI ='$URI'";
         $result = mysqli_query($conn,$sql);
+        $IDPost = 0;
 
         if (mysqli_num_rows($result) > 0) {
-            return True;
-        }else{
-            return False;
+            while($row = mysqli_fetch_assoc($result)) {
+                $IDPost = $row['IDPost'];
+            }
         }
 
         mysqli_close($conn);
+        return $IDPost;
+    }
+
+
+    function agregarPostXCategoria($id,$arr){
+        $conn = $this->Conectar();
+
+            foreach ($arr as $element) {
+                $sql .= "CALL insertarCategorias('$id','$element');";
+            }
+
+            if (mysqli_multi_query($conn,$sql)) {
+                return True;
+        }
+
+        mysqli_close($conn);
+}
+
+    function getLastID(){
+        $conn = $this->Conectar();
+        $sql = "SELECT MAX(IDPost) AS MaxIDPost FROM post";
+        $result = mysqli_query($conn,$sql);
+
+            if (mysqli_query($conn,$sql)) {
+                while($row = mysqli_fetch_assoc($result)) {
+                    $ID = $row['MaxIDPost'];
+                }
+            }
+
+        mysqli_close($conn);
+        return $ID;
     }
 
 

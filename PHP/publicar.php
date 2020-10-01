@@ -29,23 +29,35 @@ session_start();
 
                 <div class="col-2 m-auto" style="margin-top:10px!important;">
                     <label for="subirImagen" class="estiloLabel">Seleccionar Imagen</label>
-                    <input class="esconder" type="file" id="subirImagen" onchange="preview(event);">
+                    <input class="esconder" accept="image/*" type="file" id="subirImagen" name="subirImg" onchange="preview(event);">
                 </div>
 
                 <div class="col-10" style="margin-top:10px!important;"> 
                     <input id="URI" type="text" placeholder="O ingresa una URI" class="form-control inputRes">
                 </div>
 
-                <div class="col-12 m-auto" style="margin-top:10px!important;">
-                    <input type="text" placeholder="Titulo" class="form-control">
+                <div class="col-12">
+                    <div id="errorArchivo" class="alert alert-danger esconder" role="alert">
+                        Debe seleccionar un archivo o ingresar una URI
+                    </div>
                 </div>
 
                 <div class="col-12 m-auto" style="margin-top:10px!important;">
-                    <textarea placeholder="Descripcion" class="form-control" name="" id="" cols="30" rows="6"></textarea>
+                    <input id="titulo" type="text" placeholder="Titulo" class="form-control">
+                </div>
+
+                <div class="col-12 mt-2">
+                    <div id="errorTitulo" class="alert alert-danger esconder" role="alert">
+                        Debe ingresar un titulo
+                    </div>
+                </div>
+
+                <div class="col-12 m-auto" style="margin-top:10px!important;">
+                    <textarea id="desc" placeholder="Descripcion" class="form-control" cols="30" rows="6"></textarea>
                 </div>
 
                 <div class="col-12 m-auto" style="margin-top:10px!important;"> 
-                    <textarea placeholder="Tags separados por coma(,)" class="form-control" name="" id="" cols="30" rows="3"></textarea>
+                    <textarea id="tags" placeholder="Tags separados por coma(,)" class="form-control" cols="30" rows="3"></textarea>
                 </div>
             </div>
         </div>
@@ -58,15 +70,32 @@ session_start();
             <?php
                     while($row = mysqli_fetch_assoc($result)) {
                         echo "<div style='display:inline;' class='col-md-2 col-4 ml-2 mt-3'>";
-                        echo "<input class='checkHover' type='checkbox' id='Cat' value=".$row['IDCategoria'].">";
+                        echo "<input class='checkHover' type='checkbox' value=".$row['IDCategoria'].">";
                         echo "<label class='fuenteCheck' for=".$row['Nombre'].">".$row['Nombre']."</label>";
                         echo "</div>";
                     }
                 ?>
             </div>
-
+            
             <div class="row">
+
+            <div class="col-12  mt-2">
+                    <div id="errorCat" class="alert alert-danger esconder" role="alert">
+                        Debe seleccionar la(s) categoria(s)
+                    </div>
+                </div>
+
                 <div class="col-12 mt-3">
+                    <div id="errorSubida" class="alert alert-danger esconder" role="alert">
+                        Error al realizar la publicacion, por favor intente nuevamente
+                    </div>
+
+                    <div id="publicacionCorrecta" class="alert alert-success esconder" role="alert">
+                        Su publicacion se realizo correctamente
+                    </div>
+                </div>
+
+                <div id="SubidaPost" class="col-12" style="padding:5px;">
                     <button id="agregarImagen" class="btn btn-success form-control boton-mid-len">Subir</button>
                     <button class="btn btn-danger form-control boton-mid-len" onclick="window.location.replace('/Animales/');">Cancelar</button>
                 </div>

@@ -54,7 +54,7 @@
       </li>
 
       <li id="post" class="nav-item-custom">
-        <a href="#" class="nav-link-custom">
+        <a href="/Animales/PHP/publicar.php" class="nav-link-custom">
         <svg class="svg-icon" viewBox="0 0 20 20">
                             <path 
                             fill="currentColor"
