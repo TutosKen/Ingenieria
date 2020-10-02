@@ -38,22 +38,22 @@ session_start();
                     }
 
                     ?>
+                </div>
 
                 </div>
-                </div>
-                
 
+            </div>
+
+            <div class="row" id="seccionComent">
                 <?php                    
-                    $result = $miPost->getImagenes();
-
-                    while($row = mysqli_fetch_assoc($result)) {
-                        echo "<div class='animarImagen col-6 col-md-3 mt-5'>";
-                        echo "<div class='imagen'><a href='/Animales/PHP/Post.php?IDimagen=".$row['IDPost']."'><img class='miniatura' src='".$row['URI']."'><h5 class='text-center'>".$row['Titulo']."</h5></a></div>";
-                        echo "<div class='vistas'>👁<strong>".$row['CantVistas']."</strong></div>";
-                        echo"</div>";
-                    }
+                        $miPost->getImagenes();
                 ?>
-            
+            </div>
+
+            <div class="row">
+                <div class="col-12 text-center mt-5">
+                    <button id="mostrarMas" class="btn btn-dark">Mostrar Más</button>
+                </div>
             </div>
         </div>
 

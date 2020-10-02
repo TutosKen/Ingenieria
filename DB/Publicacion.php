@@ -12,6 +12,7 @@ class Publicacion{
     private $FK_Usuario;
     private $URI;
     private $conn;
+    private $Limit = 12;
 
     public function __construct(){
         $this->conn = New Conexion;
@@ -19,11 +20,30 @@ class Publicacion{
 
     public function getImagenes(){
         $conn = $this->conn->Conectar();
-        $sql = "Select * from post";
+        $sql = "Select * from post LIMIT $this->Limit";
         $result = mysqli_query($conn,$sql);
 
         if (mysqli_num_rows($result) > 0) {
-            return $result;
+            while($row = mysqli_fetch_assoc($result)) {
+                echo "<div class='animarImagen col-6 col-md-3 mt-5'>";
+                echo "<div class='imagen'><a href='/Animales/PHP/Paginas/Post.php?IDimagen=".$row['IDPost']."'><img class='miniatura' src='".$row['URI']."'><h5 class='text-center'>".$row['Titulo']."</h5></a></div>";
+                echo "<div class='vistas'>👁<strong>".$row['CantVistas']."</strong></div>";
+                echo"</div>";
+            }
+        }
+
+        mysqli_close($conn);
+    }
+
+    public function countPosts(){
+        $conn = $this->conn->Conectar();
+        $sql = "Select count(*) as cant from post";
+        $result = mysqli_query($conn,$sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            while($row = mysqli_fetch_assoc($result)){
+                return $row['cant'];
+            }
         }
 
         mysqli_close($conn);
@@ -32,7 +52,7 @@ class Publicacion{
     public function buscar($str){
         $conn = $this->conn->Conectar();
 
-        $sql = "select * from post where Titulo LIKE '%$str%' or Descripcion LIKE '%$str%' or Tags LIKE '%$str%'";
+        $sql = "select * from post where Titulo LIKE '%$str%' or Descripcion LIKE '%$str%' or Tags LIKE '%$str%' LIMIT $this->Limit";
         $result = mysqli_query($conn,$sql);
 
         if (mysqli_num_rows($result) > 0) {
@@ -186,30 +206,33 @@ class Publicacion{
 }
 
 
-    function setID($par){
+    public function setID($par){
         $this->IDPost = $par;
     }
 
-    function setTitulo($par){
+    public function setTitulo($par){
         $this->Titulo = $par;
     }
 
-    function setDescripcion($par){
+    public function setDescripcion($par){
         $this->Descripcion = $par;
     }
 
-    function setTags($par){
+    public function setTags($par){
         $this->Tags = $par;
     }
 
-    function setFKUsuario($par){
+    public function setFKUsuario($par){
         $this->FK_Usuario = $par;
     }
 
-    function setURI($par){
+    public function setURI($par){
         $this->URI = $par;
     }
 
+    public function setLimit($par){
+        $this->Limit = $par;
+    }
 }
 
 ?>

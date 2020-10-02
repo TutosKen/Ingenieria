@@ -85,7 +85,7 @@ session_start();
     
         <div id="contBtnModificar" class="text-center" style="padding:5px;">
             <button id="modificarUsuario" class="boton-ln btn btn-sm btn-success">Editar</button>
-            <button class="boton-ln btn btn-sm btn-danger mt-2" onclick="window.location.replace('/Animales/PHP/Paginas/perfil.php?IDUsuario=<?php echo $_SESSION['IDUsuario'];?>');">Cancelar</button>
+            <button class="boton-ln btn btn-sm btn-danger mt-2" onclick="window.location.replace('/Animales/PHP/Paginas/perfil.php?IDUsuario=<?php echo $_SESSION['IDUsuario'];?>');">Volver</button>
         </div>
 
             

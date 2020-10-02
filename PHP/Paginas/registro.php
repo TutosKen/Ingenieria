@@ -18,7 +18,7 @@ if (isset($_SESSION['IDUsuario'])) {
         require_once('../navbar.php');
     ?>
 <div class="card mx-auto border-primary" style="width: 40rem;">
-<img class="card-img-top" src="../img/logo.jpg" alt="Card image cap">
+<img class="card-img-top" src="../../img/logo.jpg" alt="Card image cap">
   <div class="card-body">
     <h5 class="card-title text-center">Animales</h5>
 

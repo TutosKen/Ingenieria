@@ -1,4 +1,20 @@
 $(document).ready(function(){
+    var cuentaImagenes = 12;
+
+    function countPosts(){
+        $.post("/Animales/PHP/acciones.php",{
+            MaxPosts: cuentaImagenes
+        }, function(data,status){
+                // alert(data);
+                if (data == 1) {
+                    setTimeout(function(){
+                        $("#mostrarMas").attr('disabled',"");
+                      }, 100);   
+                }
+        });
+    }
+
+    countPosts();
 
     $("#login").click(function(){
         $.post("/Animales/PHP/acciones.php",{
@@ -14,25 +30,39 @@ $(document).ready(function(){
         });
     });
 
-    $("#buscar").keyup(function() { 
-        $.post("/Animales/PHP/acciones.php",{
-            busqueda: $("#buscar").val()
-        }, function(data,status){
-            $("#noResult").remove();
-            $(".col-md-3").remove();
-            $(data).insertAfter("#btnFiltro");
+    $("#buscar").keyup(function() {
+        cuentaImagenes = 12;
+        $("#mostrarMas").removeAttr('disabled');
+        $("#seccionComent").load("/Animales/PHP/acciones.php",{
+            busqueda:$("#buscar").val()
+        }, function(responseTxt, statusTxt, xhr){
+            if (responseTxt != '') {
+                $("#mostrarMas").hide();
+            }
         });
+        if (!$("#buscar").val()) {
+            setTimeout(function(){
+                $("#mostrarMas").show();
+              }, 100); 
+        }
+
     });
 
     $(".especial").click(function() {
+        $("#mostrarMas").hide();
         var nombreCat = $(this).html();
-        $.post("/Animales/PHP/acciones.php",{
-            NombreCat: nombreCat
-        }, function(data,status){
-            $("#noResult").remove();
-            $(".col-md-3").remove();
-            $(data).insertAfter("#btnFiltro");
+        $("#seccionComent").load("/Animales/PHP/acciones.php",{
+            NombreCat:nombreCat
         });
+    });
+
+    $("#mostrarMas").click(function(){
+        cuentaImagenes = cuentaImagenes + 4;
+        $("#seccionComent").load("/Animales/PHP/acciones.php",{
+            nuevaCuenta:cuentaImagenes
+        });
+
+        countPosts();
     });
 
     $("#emailRegistro").keyup(function(){
@@ -263,6 +293,7 @@ $(document).ready(function(){
             success: function(response){ 
                 if(response != 0){ 
                     $("#publicacionCorrecta").show();
+                    $("#agregarImagen").attr("disabled","");
                 } 
                 else{ 
                     $("#errorSubida").show();
@@ -289,8 +320,10 @@ $(document).ready(function(){
     $("#SubidaPost").mouseover(function(){
         if ((!$('#subirImagen').val() && !$("#URI").val()) || !$("#titulo").val() || $('input:checkbox:checked').length == 0) {
             $("#agregarImagen").attr('disabled','');
+            $("#publicacionCorrecta").hide();
         }else{
             $("#agregarImagen").removeAttr('disabled');
+            $("#publicacionCorrecta").hide();
         }
     });
 

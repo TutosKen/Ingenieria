@@ -161,6 +161,30 @@ function CerrarSesion(){
     header('location: /Animales/');
 }
 
+
+function mostrarMas(){
+    $miPost = new Publicacion;
+    $miPost->setLimit($_POST['nuevaCuenta']);
+    $miPost->getImagenes();
+}
+
+function verificarMaxPosts(){
+    $miPost = new Publicacion;
+    $result = $miPost->countPosts();
+
+    if ($result <= $_POST['MaxPosts']) {
+        echo 1;
+    }
+}
+
+if (isset($_POST['MaxPosts'])) {
+    verificarMaxPosts();
+}
+
+if (isset($_POST['nuevaCuenta'])) {
+    mostrarMas();
+}
+
 if (isset($_POST['email'])) {
     Login();
 }

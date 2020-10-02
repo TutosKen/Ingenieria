@@ -7,7 +7,7 @@ session_start();
 <html lang="es">
 <head>
     <?php
-        require_once('head.php');
+        require_once('../head.php');
     ?>
     <title><?php ?></title>
 </head>
