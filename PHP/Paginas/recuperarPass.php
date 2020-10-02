@@ -9,7 +9,7 @@ if (isset($_SESSION['usuario'])) {
 <html lang="es">
 <head>
     <?php 
-        require_once('head.php');
+        require_once('../head.php');
         
     ?>
     <title>Recuperar contraseña</title>
@@ -33,11 +33,6 @@ if (isset($_SESSION['usuario'])) {
         <div id="correoNoEnviado" class="alert alert-danger margen" role="alert" style="display:none;">
             Error al enviar el correo
         </div>
-
-        <div id="correoVacio" class="alert alert-danger margen" role="alert" style="display:none;">
-            Debes ingresar un correo
-        </div>
-
         
 
         <div class="text-center">
@@ -52,7 +47,7 @@ if (isset($_SESSION['usuario'])) {
 </div>
 
 <?php
-    include('JS.php');
+    require_once('../JS.php');
 ?>
 </body>
 </html>

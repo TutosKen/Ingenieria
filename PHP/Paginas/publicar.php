@@ -7,17 +7,17 @@ session_start();
 <html lang="es">
 <head>
     <?php
-        require_once('head.php');
+        require_once('../head.php');
     ?>
     <title>Animales</title>
 </head>
     <body>
         <?php
-            require_once('navbar.php');
-            require_once('../DB/Conectar.php');
-            $conn = New Conexion;
+            require_once('../navbar.php');
+            require_once('../../DB/Publicacion.php');
+            $miPost = New Publicacion;
 
-            $result = $conn->getCategorias();
+            $result = $miPost->getCategorias();
         ?>
     <main>
 
@@ -79,11 +79,11 @@ session_start();
             
             <div class="row">
 
-            <div class="col-12  mt-2">
+            <!-- <div class="col-12  mt-2">
                     <div id="errorCat" class="alert alert-danger esconder" role="alert">
                         Debe seleccionar la(s) categoria(s)
                     </div>
-                </div>
+                </div> -->
 
                 <div class="col-12 mt-3">
                     <div id="errorSubida" class="alert alert-danger esconder" role="alert">
@@ -106,7 +106,7 @@ session_start();
 
 
         <?php
-            include('JS.php');
+            require_once('../JS.php');
         ?>
 
         <script>

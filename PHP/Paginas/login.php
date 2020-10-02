@@ -9,7 +9,7 @@ if (isset($_SESSION['IDUsuario'])) {
 <html lang="es">
 <head>
     <?php 
-        require_once('head.php');
+        require_once('../head.php');
         
     ?>
     <title>Iniciar sesion animales</title>
@@ -17,7 +17,7 @@ if (isset($_SESSION['IDUsuario'])) {
 <body>
 
 <div class="card mx-auto border-primary" style="width: 25rem;">
-<img class="card-img-top" src="../img/logo.jpg" alt="Card image cap">
+<img class="card-img-top" src="../../img/logo.jpg" alt="Card image cap">
   <div class="card-body">
     <h5 class="card-title text-center">Animales</h5>
 
@@ -52,7 +52,7 @@ if (isset($_SESSION['IDUsuario'])) {
 </div>
 
 <?php
-    include('JS.php');
+    require_once('../JS.php');
 ?>
 </body>
 </html>

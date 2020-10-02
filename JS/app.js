@@ -8,6 +8,7 @@ $(document).ready(function(){
             if (data == "Valido") {
                 window.location.replace("/Animales/");
             }else{
+                // alert(data);
                 $("#errorInicioSesion").show();
             }
         });
@@ -109,7 +110,7 @@ $(document).ready(function(){
     });
 
     $("#modificarPerfil").click(function() {
-        window.location.replace("/Animales/PHP/editarPerfil.php");
+        window.location.replace("/Animales/PHP/Paginas/editarPerfil.php");
     });
 
 
@@ -189,7 +190,7 @@ $(document).ready(function(){
         $.post("/Animales/PHP/acciones.php",{
             emailRecover: $("#emailRecover").val()
         }, function(data,status){
-            $("#correoVacio").hide();
+            $("#correoNoEnviado").hide();
             $("#preguntaS").remove();
             $("#respuestaS").remove();
             $(data).insertAfter("#emailRecover");
@@ -293,13 +294,13 @@ $(document).ready(function(){
         }
     });
 
-    $("#SubidaPost").mouseover(function(){
-        if ($('input:checkbox:checked').length == 0) {
-            $("#errorCat").show();
-        }else{
-            $("#errorCat").hide();
-        }
-    });
+    // $("#SubidaPost").mouseover(function(){
+    //     if ($('input:checkbox:checked').length == 0) {
+    //         $("#errorCat").show();
+    //     }else{
+    //         $("#errorCat").hide();
+    //     }
+    // });
 
     $("#URI").focusout(function(){
         if ((!$('#subirImagen').val() && !$("#URI").val())){

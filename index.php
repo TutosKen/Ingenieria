@@ -14,8 +14,8 @@ session_start();
     <body>
         <?php
             require_once('PHP/navbar.php');
-            require_once('DB/Conectar.php');
-            $conn = New Conexion;
+            require_once('DB/Publicacion.php');
+            $miPost = New Publicacion;;
         ?>
     <main>
 
@@ -30,7 +30,7 @@ session_start();
                     <button class="btn btn-info btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="img/imgsPagina/filtro.png" alt="" height="20"></button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                     <?php 
-                    $filtro = $conn->getCategorias();
+                    $filtro = $miPost->getCategorias();
                     echo "<a href='/Animales/' class='dropdown-item' style='color:black !important'>Todos</a>";
 
                     while($row = mysqli_fetch_assoc($filtro)) {
@@ -44,7 +44,7 @@ session_start();
                 
 
                 <?php                    
-                    $result = $conn->getImagenes();
+                    $result = $miPost->getImagenes();
 
                     while($row = mysqli_fetch_assoc($result)) {
                         echo "<div class='animarImagen col-6 col-md-3 mt-5'>";
@@ -59,7 +59,7 @@ session_start();
 
 
         <?php
-            include('PHP/JS.php');
+            require_once('PHP/JS.php');
         ?>
     </body>
 </main>

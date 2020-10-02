@@ -9,13 +9,13 @@ if (isset($_SESSION['IDUsuario'])) {
 <html lang="es">
 <head>
     <?php 
-        require_once('head.php');
+        require_once('../head.php');
     ?>
     <title>Registro animales</title>
 </head>
 <body>
     <?php
-        require_once('navbar.php');
+        require_once('../navbar.php');
     ?>
 <div class="card mx-auto border-primary" style="width: 40rem;">
 <img class="card-img-top" src="../img/logo.jpg" alt="Card image cap">
@@ -82,7 +82,7 @@ if (isset($_SESSION['IDUsuario'])) {
 </div>
 
     <?php
-        include('JS.php');
+        require_once('../JS.php');
     ?>
 </body>
 </html>

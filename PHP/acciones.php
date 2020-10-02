@@ -1,7 +1,8 @@
 <?php
 session_start();
-//session_unset();
-require_once('../DB/Conectar.php');
+include '../DB/Usuario.php';
+include '../DB/Publicacion.php';
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -9,102 +10,35 @@ require '../PHPMailer/src/Exception.php';
 require '../PHPMailer/src/PHPMailer.php';
 require '../PHPMailer/src/SMTP.php';
 
-$conn = New Conexion;
+function Login(){
+    $miUsuario = New Usuario;
+    $miUsuario->setEmail($_POST['email']); 
+    $miUsuario->setClave($_POST['pass']);;
 
-if (isset($_POST['email'])) {
-    $emailL = $_POST['email']; 
-    $passwd = $_POST['pass'];
-
-    $bandera = $conn->IniciarSesion($emailL,$passwd);
-
-    if (mysqli_num_rows($bandera) > 0) {
-        while ($fila = mysqli_fetch_assoc($bandera)) {
-            $_SESSION['IDUsuario'] = $fila['IDUsuario'];
-            $_SESSION['email'] = $fila['Email'];
-            $_SESSION['NombreUsuario'] = $fila['Nick'];
-            $_SESSION['cedula'] = $fila['Cedula'];
-        }
+    if ($miUsuario->IniciarSesion()) {
         echo "Valido";
     }else{
         echo "Invalido";
     }
 }
 
-if (isset($_POST['logout'])) {
-    session_unset();
-    header('location: /Animales/');
-}
+function Registro(){
+    $miUsuario = New Usuario;
+    $miUsuario->llenarInfo($_POST['Nombre'],$_POST['Apellido'],$_POST['Cedula'],$_POST['Direccion'],$_POST['Email'],$_POST['Telefono'],$_POST['UsuarioR'],
+    $_POST['Pass'],$_POST['Pregunta'],$_POST['Respuesta']);
 
-if (isset($_POST['busqueda'])) {
-    $str = $_POST['busqueda'];
-    echo $conn->buscar($str);
-}
-
-if (isset($_POST['NombreCat'])) {
-    $str = $_POST['NombreCat'];
-    echo $conn->getPostFiltrados($str);
-    
-    
-}
-
-
-if (isset($_POST['Nombre'])) {
-    $nombreR = $_POST['Nombre'];
-    $apellidoR = $_POST['Apellido'];
-    $emailR = $_POST['Email'];
-    $cedulaR = $_POST['Cedula'];
-    $direccionR = $_POST['Direccion'];
-    $telefonoR = $_POST['Telefono'];
-    $usuarioR = $_POST['UsuarioR'];
-    $passR = $_POST['Pass'];
-    $preguntaR = $_POST['Pregunta'];
-    $respuestaR = $_POST['Respuesta'];
-
-    if ($conn->agregarUsuario($nombreR, $apellidoR, $emailR, $cedulaR, $direccionR, $telefonoR, $usuarioR,
-    $passR, $preguntaR, $respuestaR)) {
-
-        $flag = $conn->IniciarSesion($emailR,$passR);
-
-        if (mysqli_num_rows($flag) > 0) {
-            while ($filar = mysqli_fetch_assoc($flag)) {
-                $_SESSION['IDUsuario'] = $filar['IDUsuario'];
-                $_SESSION['email'] = $fila['Email'];
-                $_SESSION['NombreUsuario'] = $fila['Nick'];
-                $_SESSION['cedula'] = $fila['Cedula'];
-            }
-        }
-
+    if ($miUsuario->agregarUsuario()) {
         echo "Exito";
 
     }
 }
 
-if (isset($_POST['NombreEditado'])) {
-    $nombreR = $_POST['NombreEditado'];
-    $apellidoR = $_POST['Apellido'];
-    $emailR = $_POST['Email'];
-    $cedulaR = $_POST['Cedula'];
-    $direccionR = $_POST['Direccion'];
-    $telefonoR = $_POST['Telefono'];
-    $usuarioR = $_POST['UsuarioR'];
-    $passR = $_POST['Pass'];
-    $preguntaR = $_POST['Pregunta'];
-    $respuestaR = $_POST['Respuesta'];
-    $idR = $_SESSION['IDUsuario'];
-
-    if ($conn->actualizarUsuario($nombreR, $apellidoR, $emailR, $cedulaR, $direccionR, $telefonoR, $usuarioR,
-    $passR, $preguntaR, $respuestaR,$idR)) {
-
-        echo "Exito";
-
-    }
-}
-
-
-if (isset($_POST['verEmail'])) {
+function verEmail(){
+    $miUsuario = New Usuario;
     $email = $_POST['verEmail'];
+    $miUsuario->setEmail($email);
 
-    if ($conn->verificarEmail($email)) {
+    if ($miUsuario->verificarEmail()) {
         if ($_SESSION['IDUsuario'] != '') {
             if ($email == $_SESSION['email']) {
                 echo "PerteneceAlUsuario";
@@ -113,14 +47,14 @@ if (isset($_POST['verEmail'])) {
 
         echo "Existe";
     }
-    
 }
 
-
-if (isset($_POST['verUsuario'])) {
+function verUsuario(){
+    $miUsuario = New Usuario;
     $usuario = $_POST['verUsuario'];
+    $miUsuario->setNick($usuario);
 
-    if ($conn->verificarUsuario($usuario)) {
+    if ($miUsuario->verificarUsuario()) {
         if ($_SESSION['IDUsuario'] != '') {
             if ($usuario == $_SESSION['NombreUsuario']) {
                 echo "PerteneceAlUsuario";
@@ -130,10 +64,12 @@ if (isset($_POST['verUsuario'])) {
     }
 }
 
-if (isset($_POST['verCedula'])) {
+function verCedula(){
+    $miUsuario = New Usuario;
     $cedula = $_POST['verCedula'];
+    $miUsuario->setCedula($cedula);
 
-    if ($conn->verificarCedula($cedula)) {
+    if ($miUsuario->verificarCedula()) {
         if ($_SESSION['IDUsuario'] != '') {
             if ($cedula == $_SESSION['cedula']) {
                 echo "PerteneceAlUsuario";
@@ -143,9 +79,33 @@ if (isset($_POST['verCedula'])) {
     }
 }
 
-if (isset($_POST['emailRecover'])) {
+function EditarInfoUsuario(){
+    $miUsuario = New Usuario;
+    $miUsuario->llenarInfo($_POST['NombreEditado'],$_POST['Apellido'],$_POST['Cedula'],$_POST['Direccion'],$_POST['Email'],$_POST['Telefono'],$_POST['UsuarioR'],
+    $_POST['Pass'],$_POST['Pregunta'],$_POST['Respuesta']);
+    $miUsuario->setID($_SESSION['IDUsuario']);
+
+    if ($miUsuario->actualizarUsuario()) {
+        echo "Exito";
+    }
+}
+
+function EliminarUsuario(){
+    $miUsuario = New Usuario;
+    $miUsuario->setID($_SESSION['IDUsuario']);
+    
+    if ($miUsuario->eliminarCuenta()) {
+        session_unset();
+        echo "Exito";
+    }
+}
+
+function RecuperarContra(){
+    $miUsuario = New Usuario;
     $_SESSION['emailRecuperacion'] = $_POST['emailRecover'];
-    $result = $conn->getPreguntaUsuario($_SESSION['emailRecuperacion']);
+    $miUsuario->setEmail($_POST['emailRecover']);
+
+    $result = $miUsuario->getPreguntaUsuario();
 
         while($row = mysqli_fetch_assoc($result)) {
             echo "<script>document.getElementById('emailRecover').setAttribute('disabled','')</script>";
@@ -157,7 +117,7 @@ if (isset($_POST['emailRecover'])) {
         }
 }
 
-if (isset($_POST['respuestaS'])) {
+function EnviarCorreoRecuperacion(){
     $res = trim($_POST['respuestaS']);
 
     if ($res == $_SESSION['respuestaCorrecta']) {  
@@ -184,22 +144,70 @@ if (isset($_POST['respuestaS'])) {
         }
 }
 
-if (isset($_POST['EliminarCuenta'])) {
-    $idElim = $_SESSION['IDUsuario'];
-    
-    if ($conn->eliminarCuenta($idElim)) {
-        session_unset();
-        echo "Exito";
-    }
+function BuscarPost(){
+    $miPost = New Publicacion;
+    $str = $_POST['busqueda'];
+    echo $miPost->buscar($str);
 }
 
-    // $uri = $_POST['URIn'];
-    // $titulo = $_POST['titulo'];
-    // $desc = $_POST['desc'];
-    // $tags = $_POST['tags'];
-    // $cats = $_POST['Cat'];
+function FiltrarCat(){
+    $miPost = New Publicacion;
+    $str = $_POST['NombreCat'];
+    echo $miPost->getPostFiltrados($str); 
+}
 
-    // if ($conn->agregarImagen($titulo, $desc, $tags, $_SESSION['IDUsuario'],$uri,$cats)) {
-    //     echo "Exito";
-    // }
+function CerrarSesion(){
+    session_unset();
+    header('location: /Animales/');
+}
+
+if (isset($_POST['email'])) {
+    Login();
+}
+
+if (isset($_POST['Nombre'])) {
+    Registro();
+}
+
+if (isset($_POST['verEmail'])) {
+    verEmail();
+}
+
+if (isset($_POST['verUsuario'])) {
+    verUsuario();
+}
+
+if (isset($_POST['verCedula'])) {
+    verCedula();
+}
+
+if (isset($_POST['NombreEditado'])) {
+    EditarInfoUsuario();
+
+}
+
+if (isset($_POST['EliminarCuenta'])) {
+    EliminarUsuario();
+}
+
+if (isset($_POST['emailRecover'])) {
+    RecuperarContra();
+}
+
+if (isset($_POST['respuestaS'])) {
+    EnviarCorreoRecuperacion();
+}
+
+if (isset($_POST['logout'])) {
+    CerrarSesion();
+}
+
+if (isset($_POST['busqueda'])) {
+    BuscarPost();
+}
+
+if (isset($_POST['NombreCat'])) {
+    FiltrarCat();   
+}
+
 ?>

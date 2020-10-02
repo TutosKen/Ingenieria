@@ -6,17 +6,18 @@ session_start();
 <html lang="es">
 <head>
     <?php 
-        require_once('head.php');
+        require_once('../head.php');
     ?>
     <title>Registro animales</title>
 </head>
 <body>
     <?php
-        require_once('navbar.php');
-        require_once("../DB/Conectar.php");
+        require_once('../navbar.php');
+        require_once("../../DB/Usuario.php");
 
-        $conn = New Conexion;
-        $infoUsuario = $conn->getInfoUsuario($_SESSION['IDUsuario']);
+        $miUsuario = New Usuario;
+        $miUsuario->setID($_SESSION['IDUsuario']);
+        $infoUsuario = $miUsuario->getInfoUsuario();
 
         while($row = mysqli_fetch_assoc($infoUsuario)) {
             $Nombre = $row['Nombre'];
@@ -26,7 +27,7 @@ session_start();
             $Direccion = $row['Direccion'];
             $Telefono = $row['Telefono'];
             $UserName = $row['Nick'];
-            $NuevaContra = $row['Clave'];
+            $NuevaContra = $miUsuario->DesencriptarPass($row['Clave']);
             $Pregunta = $row['FK_Pregunta'];
             $Respuesta = $row['RespuestaSecreta'];
         }
@@ -84,7 +85,7 @@ session_start();
     
         <div id="contBtnModificar" class="text-center" style="padding:5px;">
             <button id="modificarUsuario" class="boton-ln btn btn-sm btn-success">Editar</button>
-            <button class="boton-ln btn btn-sm btn-danger mt-2" onclick="window.location.replace('/Animales/PHP/perfil.php?IDUsuario=<?php echo $_SESSION['IDUsuario'];?>');">Cancelar</button>
+            <button class="boton-ln btn btn-sm btn-danger mt-2" onclick="window.location.replace('/Animales/PHP/Paginas/perfil.php?IDUsuario=<?php echo $_SESSION['IDUsuario'];?>');">Cancelar</button>
         </div>
 
             
@@ -125,7 +126,7 @@ session_start();
         </div>
 
     <?php
-        include('JS.php');
+        require_once('../JS.php');
     ?>
 </body>
 </html>

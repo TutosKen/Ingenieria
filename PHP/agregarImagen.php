@@ -1,10 +1,10 @@
 <?php
     session_start();
-    include('../DB/Conectar.php');
-    $conn = New Conexion;
+    require_once('../DB/Publicacion.php');
+    $miPost = New Publicacion;
 
 // Primero subimos la imagen si existe
-$id = $conn->getLastID() + 1;
+$id = $miPost->getLastID() + 1;
 $imagen = $_FILES['file']['name'];
 $tamanno = $_FILES['file']['size'];
 
@@ -18,29 +18,30 @@ $tamanno = $_FILES['file']['size'];
                 // echo "Exito";
                 $URIexp = explode('/',$location);
                 $URIFinal = "/".$URIexp[3]."/".$URIexp[4]."/".$URIexp[5];
-                $URI = $URIFinal;
+                $miPost->setURI($URIFinal);
             }else{ 
                 echo 0; 
             } 
         }
     }else{
-        $URI = $_POST['URI'];
+        $miPost->setURI($_POST['URI']);
     }
 
 // Se agrega la info a la db
-$titulo = $_POST['titulo'];
-$desc = $_POST['desc'];
-$tags = $_POST['tags'];
-$IDUsuario = $_SESSION['IDUsuario'];
 $cats = $_POST['cat'];
 
-if ($conn->agregarImagen($titulo,$desc,$tags,$IDUsuario,$URI)) {
+$miPost->setTitulo($_POST['titulo']);
+$miPost->setDescripcion($_POST['desc']);
+$miPost->setTags($_POST['tags']);
+$miPost->setFKUsuario($_SESSION['IDUsuario']);
+
+if ($miPost->agregarImagen()) {
     // Se obtiene el ID de la imagen que se acaba de agregar
-    $id = $conn->getImagenPorURI($URI);
+    $id = $miPost->getImagenPorURI();
 
     // Se agregan las categorias a la tabla postxcategoria
     $elements = explode(',', $cats);    
-    if ($conn->agregarPostXCategoria($id,$elements)) {
+    if ($miPost->agregarPostXCategoria($id,$elements)) {
         echo "Exito";
     }
 }

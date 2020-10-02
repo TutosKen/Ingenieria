@@ -13,8 +13,8 @@ session_start();
 </head>
     <body>
         <?php
-            require_once('../PHP/navbar.php');
-            require_once('../DB/Conectar.php');
+            require_once('../navbar.php');
+            require_once('../../DB/Publicacion.php');
         ?>
     <main>
 
@@ -22,10 +22,10 @@ session_start();
 
                 <?php
                     if (isset($_GET['IDimagen'])) {
-                        $id = $_GET['IDimagen'];
-                        $conn = New Conexion;
-                        $conn->aumentarCantVisitas($id);
-                        $result = $conn->getImagen($id);
+                        $miPost = New Publicacion;
+                        $miPost->setID($_GET['IDimagen']);
+                        $miPost->aumentarCantVisitas();
+                        $result = $miPost->getImagen();
 
                         while($row = mysqli_fetch_assoc($result)) {
                             echo "<h2>".$row['Titulo']."</h2>";
@@ -49,7 +49,7 @@ session_start();
 
 
         <?php
-            include('PHP/JS.php');
+            require_once('../JS.php');
         ?>
     </body>
 </main>
