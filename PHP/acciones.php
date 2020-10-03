@@ -10,6 +10,11 @@ require '../PHPMailer/src/Exception.php';
 require '../PHPMailer/src/PHPMailer.php';
 require '../PHPMailer/src/SMTP.php';
 
+function CargarImagenes(){
+    $miPost = New Publicacion;
+    $miPost->getImagenes();
+}
+
 function Login(){
     $miUsuario = New Usuario;
     $miUsuario->setEmail($_POST['email']); 
@@ -118,7 +123,8 @@ function RecuperarContra(){
 }
 
 function EnviarCorreoRecuperacion(){
-    $res = trim($_POST['respuestaS']);
+    $miUsuario = New Usuario;
+    $res = trim($miUsuario->EncriptarPass($_POST['respuestaS']));
 
     if ($res == $_SESSION['respuestaCorrecta']) {  
             $mail = New PHPMailer(true);
@@ -134,7 +140,7 @@ function EnviarCorreoRecuperacion(){
         
                 $mail->AddAddress($_SESSION['emailRecuperacion'],'Admin@animales.com');
                 $mail->Subject = 'Recuperacion de contrasenna';
-                $mail->Body = 'Tu contraseña es: '.$_SESSION['Clave'];
+                $mail->Body = 'Tu contraseña es: '.$miUsuario->DesencriptarPass($_SESSION['Clave']);
         
                 $mail->send();
                 echo "Exito";
@@ -175,6 +181,10 @@ function verificarMaxPosts(){
     if ($result <= $_POST['MaxPosts']) {
         echo 1;
     }
+}
+
+if (isset($_POST['cargar'])) {
+    CargarImagenes();
 }
 
 if (isset($_POST['MaxPosts'])) {

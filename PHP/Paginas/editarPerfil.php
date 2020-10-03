@@ -29,7 +29,7 @@ session_start();
             $UserName = $row['Nick'];
             $NuevaContra = $miUsuario->DesencriptarPass($row['Clave']);
             $Pregunta = $row['FK_Pregunta'];
-            $Respuesta = $row['RespuestaSecreta'];
+            $Respuesta = $miUsuario->DesencriptarPass($row['RespuestaSecreta']);
         }
     ?>
 <div class="card mx-auto border-primary" style="width: 40rem;">

@@ -41,6 +41,9 @@ $(document).ready(function(){
             }
         });
         if (!$("#buscar").val()) {
+            $("#seccionComent").load("/Animales/PHP/acciones.php",{
+                cargar:'true'
+            });
             setTimeout(function(){
                 $("#mostrarMas").show();
               }, 100); 
@@ -50,10 +53,22 @@ $(document).ready(function(){
 
     $(".especial").click(function() {
         $("#mostrarMas").hide();
+        $("#mostrarMas").removeAttr('disabled');
         var nombreCat = $(this).html();
         $("#seccionComent").load("/Animales/PHP/acciones.php",{
             NombreCat:nombreCat
         });
+    });
+
+    $("#noFiltro").click(function (){
+        cuentaImagenes = 12;
+        $("#seccionComent").load("/Animales/PHP/acciones.php",{
+            cargar:'true'
+        });
+
+        setTimeout(function(){
+            $("#mostrarMas").show();
+          }, 100); 
     });
 
     $("#mostrarMas").click(function(){

@@ -52,7 +52,7 @@ class Publicacion{
     public function buscar($str){
         $conn = $this->conn->Conectar();
 
-        $sql = "select * from post where Titulo LIKE '%$str%' or Descripcion LIKE '%$str%' or Tags LIKE '%$str%' LIMIT $this->Limit";
+        $sql = "select * from post where Titulo LIKE '%$str%' or Descripcion LIKE '%$str%' or Tags LIKE '%$str%'";
         $result = mysqli_query($conn,$sql);
 
         if (mysqli_num_rows($result) > 0) {

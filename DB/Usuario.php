@@ -71,6 +71,7 @@ class Usuario{
         $clave = $this->EncriptarPass($clave);
         $pregunta = mysqli_real_escape_string($conn,$this->FK_Pregunta);
         $respuesta = mysqli_real_escape_string($conn,$this->RespuestaSecreta);
+        $respuesta = $this->EncriptarPass($respuesta);
             
             $sql = "INSERT INTO usuario(Nombre,Apellido,Cedula,Direccion,Email,Telefono,Nick,Clave,FK_Pregunta,RespuestaSecreta)
             VALUES ('$nombre','$apellido','$cedula','$direccion','$email','$telefono','$nick','$clave','$pregunta','$respuesta')";
@@ -100,6 +101,7 @@ class Usuario{
         $clave = $this->EncriptarPass($clave);
         $pregunta = mysqli_real_escape_string($conn,$this->FK_Pregunta);
         $respuesta = mysqli_real_escape_string($conn,$this->RespuestaSecreta);
+        $respuesta = $this->EncriptarPass($respuesta);
         $id = mysqli_real_escape_string($conn,$this->IDUsuario);
             
             $sql = "UPDATE usuario set Nombre = '$nombre', Apellido = '$apellido', Cedula = '$cedula', Direccion = '$direccion', Email = '$email', 

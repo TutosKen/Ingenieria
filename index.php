@@ -31,7 +31,7 @@ session_start();
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                     <?php 
                     $filtro = $miPost->getCategorias();
-                    echo "<a href='/Animales/' class='dropdown-item' style='color:black !important'>Todos</a>";
+                    echo "<a id='noFiltro' class='dropdown-item' style='color:black !important'>Todos</a>";
 
                     while($row = mysqli_fetch_assoc($filtro)) {
                         echo "<a href='javascript:{}' class='dropdown-item especial' style='color:black !important'>".$row['Nombre']."</a>";
