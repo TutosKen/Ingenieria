@@ -188,9 +188,36 @@ function agregarTag(){
     $tag = $_POST['tag'];
     $tag = explode(",",$tag)[0];
     echo "<div class='col-md-2 col-4 mt-2 bg-dark tag ml-2'>";
-        echo "<button class='eliminarTag btn btn-sm btn-danger' style='background:transparent; border:none;'>&#10005;</button>";
+        echo "<button class='eliminarTag btn btn-sm' style='background:transparent; border:none;'>&#10005;</button>";
         echo "<p class='tagContent'>".$tag."</p>";
     echo "</div>";
+}
+
+function ModificarImagen(){
+    $miPost = new Publicacion; 
+    $cats = $_POST['cat'];
+    // echo $miPost->getID();
+    $miPost->setID($_POST['id']);
+    $miPost->setTitulo($_POST['titulo']);
+    $miPost->setDescripcion($_POST['desc']);
+    $miPost->setTags($_POST['tags']);
+    if ($miPost->modificarImagen()) {
+        $elements = explode(',',$cats);
+        if ($miPost->actualizarPostXCategoria($miPost->getID(),$elements)) {
+            echo "Exito";
+        }else{
+            echo 0;
+        }
+    }
+}
+
+function EliminarPost(){
+    $miPost = New Publicacion;
+    $miPost->setID($_POST['idElimP']);
+
+    if ($miPost->eliminarPost()) {
+        echo 1;
+    }
 }
 
 if (isset($_POST['cargar'])) {
@@ -256,5 +283,13 @@ if (isset($_POST['busqueda'])) {
 
 if (isset($_POST['NombreCat'])) {
     FiltrarCat();   
+}
+
+if (isset($_POST['titulo'])) {
+    ModificarImagen();
+}
+
+if (isset($_POST['idElimP'])) {
+    EliminarPost();
 }
 ?>

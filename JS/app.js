@@ -45,8 +45,6 @@ $(document).ready(function(){
             window.location.replace("/Animales/");
         }
 
-            // window.location.replace("/Animales/PHP/Paginas/editarPerfil.php");
-
     });
 
     $(".especial").click(function() {
@@ -295,7 +293,6 @@ $(document).ready(function(){
         var tituloImg  = $("#titulo").val();
         var URIImg = $("#URI").val();
         var descImg = $("#desc").val();
-        var tagsImg = $(".tagContent");
         
 
         var files = $('#subirImagen')[0].files[0]; 
@@ -340,6 +337,55 @@ $(document).ready(function(){
 
     });
 
+    $("#modificarImagen").click(function(){
+        var tagsImg = $(".tagContent");
+        var tags;
+
+        for (var i = 0; i < tagsImg.length; i++) {
+            if (i == 0) {
+                tags = tagsImg[i].innerHTML;
+            }else{
+                tags += "," + tagsImg[i].innerHTML;
+            }
+        }
+
+        var cats = [];
+        var fd = new FormData(); 
+        var tituloImg  = $("#titulo").val();
+        var descImg = $("#desc").val();
+        var id = $("#IDPostEd").val();
+
+        $('input:checked').each(function (){
+            cats.push($(this).val());
+        });
+        cats.join(',');
+
+        fd.append('cat',cats);
+        fd.append('titulo',tituloImg);
+        fd.append('desc',descImg);
+        fd.append('tags',tags);
+        fd.append('id',id);
+
+        $.ajax({ 
+            url: '/Animales/PHP/acciones.php', 
+            type: 'post', 
+            data: fd, 
+            contentType: false, 
+            processData: false, 
+            success: function(response){ 
+                if(response != 0){ 
+                    // alert(response);
+                    $("#edicionCorrecta").show();
+                    $("#modificarImagen").attr("disabled","");
+                } 
+                else{ 
+                    alert(response);
+                    $("#errorModificar").show();
+                } 
+            }, 
+        }); 
+
+    });
 
     $("#subirImagen").click(function() {
         $("#URI").val('');
@@ -356,6 +402,16 @@ $(document).ready(function(){
         }
     });
 
+    $("#modificarPost").mouseover(function (){
+        if (!$("#titulo").val() || $('input:checkbox:checked').length == 0) {
+            $("#modificarImagen").attr('disabled','');
+            $("#edicionCorrecta").hide();
+        }else{
+            $("#modificarImagen").removeAttr('disabled');
+            $("#edicionCorrecta").hide();
+        }
+    });
+
     // $("#SubidaPost").mouseover(function(){
     //     if ($('input:checkbox:checked').length == 0) {
     //         $("#errorCat").show();
@@ -363,6 +419,27 @@ $(document).ready(function(){
     //         $("#errorCat").hide();
     //     }
     // });
+
+    $(".showBtns").click(function(){
+        var padre = $(this).parent();
+        padre.find(".editarPost").slideToggle("fast");
+        padre.find(".eliminarPost").slideToggle("fast");
+    });
+
+    $(".eliminarPost").click(function(){
+        var id = $(this).val();
+        var padre = $(this).parent();
+        $.post("/Animales/PHP/acciones.php",{
+            idElimP: id
+        },function(data,status){
+            if (data == 1) {
+                $("#postElim").show();
+                padre.remove();
+                var cantActual = parseInt($("#cantPosts").html());
+                $("#cantPosts").html(cantActual-1);
+            }
+        });
+    });
 
     $("#URI").focusout(function(){
         if ((!$('#subirImagen').val() && !$("#URI").val())){
@@ -401,5 +478,5 @@ $(document).ready(function(){
             }
             
         }
-    });
+});
 

@@ -160,6 +160,23 @@ class Publicacion{
     mysqli_close($conn);
     }
 
+    public function modificarImagen(){
+        $conn = $this->conn->Conectar();
+        $titulo = mysqli_real_escape_string($conn,$this->Titulo);
+        $descripcion = mysqli_real_escape_string($conn,$this->Descripcion);
+        $tags = mysqli_real_escape_string($conn,$this->Tags);
+        
+        $sql = "UPDATE post set Titulo='$titulo', Descripcion='$descripcion',Tags='$tags' WHERE IDPost = $this->IDPost";
+
+            if (mysqli_query($conn,$sql)) {
+                return True;
+            }else{
+                return False;
+            }
+
+    mysqli_close($conn);
+    }
+
     public function getImagenPorURI(){
         $conn = $this->conn->Conectar();
         $sql = "SELECT * from post where URI ='$this->URI'";
@@ -191,7 +208,7 @@ class Publicacion{
         return $ID;
     }
 
-    function agregarPostXCategoria($id,$arr){
+    public function agregarPostXCategoria($id,$arr){
         $conn = $this->conn->Conectar();
 
             foreach ($arr as $element) {
@@ -205,9 +222,54 @@ class Publicacion{
         mysqli_close($conn);
 }
 
+    public function actualizarPostXCategoria($id,$arr){
+        $conn = $this->conn->Conectar();
+
+            $sql .= "DELETE FROM postxcategoria WHERE FK_Post = $this->IDPost;";
+            foreach ($arr as $element) {
+                $sql .= "CALL insertarCategorias('$id','$element');";
+            }
+
+            if (mysqli_multi_query($conn,$sql)) {
+                return True;
+        }
+
+        mysqli_close($conn);
+    }
+
+public function eliminarPost(){
+    $conn = $this->conn->Conectar();
+    $sql = "DELETE FROM post WHERE IDPost = $this->IDPost";
+    $result = mysqli_query($conn,$sql);
+
+        if (mysqli_query($conn,$sql)) {
+            return True;
+        }else{
+            return False;
+        }
+
+    mysqli_close($conn);
+}
+
+    function getPostCategoria(){
+        $conn = $this->conn->Conectar();
+        $sql = "SELECT * from postxcategoria where FK_Post ='$this->IDPost'";
+        $result = mysqli_query($conn,$sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            return $result;
+        }
+
+        mysqli_close($conn);
+    }
+
 
     public function setID($par){
         $this->IDPost = $par;
+    }
+
+    public function getID(){
+        return $this->IDPost;
     }
 
     public function setTitulo($par){

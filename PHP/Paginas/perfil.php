@@ -39,7 +39,7 @@ if (!isset($_SESSION['IDUsuario'])) {
 
                 <div class="col-5 col-md-6">
                         <p class="fuenteGrande">Publicaciones</p>
-                        <p class="fuenteGrande ml-1" style="margin-top:-10px;"><?php echo $miUsuario->getCantPosts();?></p>
+                        <p id="cantPosts" class="fuenteGrande ml-1" style="margin-top:-10px;"><?php echo $miUsuario->getCantPosts();?></p>
                 </div>
 
                 <div class="col-12 col-md-12 mt-1">
@@ -63,12 +63,22 @@ if (!isset($_SESSION['IDUsuario'])) {
 
                     $infoPost = $miUsuario->getPostsUsuario();
                     while($row = mysqli_fetch_assoc($infoPost)) {
+                        // &#8230;
                         echo "<div class='animarImagen col-6 col-md-3 mt-5'>";
+                        echo "<button class='showBtns modelm btn btn-sm btn-dark' style='border:none;'>•••</button>";
+                        echo "<button class='editarPost btn btn-sm btn-success' onclick='editar(".$row['IDPost'].")' style='border:none; display:none;'>&#9998</button>";
+                        echo "<button class='eliminarPost btn btn-sm btn-danger' value='".$row['IDPost']."' style='border:none; display:none;'>&#10006</button>";
                         echo "<div class='imagen'><a href='/Animales/PHP/Paginas/Post.php?IDimagen=".$row['IDPost']."'><img class='miniatura' src='".$row['URI']."'><h5 class='text-center'>".$row['Titulo']."</h5></a></div>";
                         echo "<div class='vistas'>👁<strong>".$row['CantVistas']."</strong></div>";
                         echo"</div>";
                     }
                 ?>
+            </div>
+
+            <div class="col-12 mt-5">
+                <div id="postElim" class="alert alert-success esconder" role="alert">
+                        Publicacion eliminada correctamente
+                </div>
             </div>
         </div>
         
@@ -79,6 +89,11 @@ if (!isset($_SESSION['IDUsuario'])) {
         ?>
             </div>
             </div>
+            <script>
+                function editar(id){
+                    window.location.replace("/Animales/PHP/Paginas/editarPost.php?IDimg="+id);
+                }
+            </script>
     </body>
 </main>
 </html>

@@ -414,3 +414,21 @@ input::placeholder{
         word-wrap: break-word;
         text-align: center;
     }
+
+    .modelm{
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+    
+    .eliminarPost{
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+
+    .editarPost{
+        position: absolute;
+        right: 0;
+        bottom: 35px;
+    }
