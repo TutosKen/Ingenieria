@@ -39,10 +39,14 @@ session_start();
                             echo"</div>";
                         }
                     }
-
-                    echo "<h2>Seccion de comentarios en construccion...</h2>";
-
                 ?>
+
+                <div class="col-12 mt-5">
+                    <!-- <h6 class="card-title"></h6> -->
+                    <textarea class="form-control comentario" id="textoComentario" placeholder="Agregar comentario..." cols="30" rows="4"></textarea>
+                    <span><button id="agregarComentario" class="btn btn-success mt-1" style="display:none;">Agregar</button>
+                    <button id="cancelarComentario" class="btn btn-danger mt-1" style="display:none;">Cancelar</button></span>
+                </div>
             
         </div>
         

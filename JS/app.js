@@ -458,6 +458,17 @@ $(document).ready(function(){
     });
 });
 
+
+    $("#textoComentario").click(function(){
+        $("#agregarComentario").show();
+        $("#cancelarComentario").show();
+    });
+
+    $("#cancelarComentario").click(function(){
+        $("#agregarComentario").hide();
+        $("#cancelarComentario").hide();
+    });
+
     $("#tags").keyup(function() {
         if (this.value.indexOf(',') > -1) {
             $.post("/Animales/PHP/acciones.php", {

@@ -432,3 +432,8 @@ input::placeholder{
         right: 0;
         bottom: 35px;
     }
+
+    .comentario{
+        background-color:#c5cbeb !important;
+        border-color: #c5cbeb !important;
+    }
