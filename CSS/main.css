@@ -395,7 +395,22 @@ input::placeholder{
         }
     }
 
-
     .checkHover:hover{
         cursor: pointer;
+    }
+
+    .tag{
+        border-radius: 30px;
+    }
+
+    .tag button{
+        position: absolute;
+        right: 0;
+        top:0;
+    }
+
+    .tag p{
+        margin-right: 10px;
+        word-wrap: break-word;
+        text-align: center;
     }

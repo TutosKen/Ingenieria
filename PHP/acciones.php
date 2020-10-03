@@ -10,6 +10,7 @@ require '../PHPMailer/src/Exception.php';
 require '../PHPMailer/src/PHPMailer.php';
 require '../PHPMailer/src/SMTP.php';
 
+
 function CargarImagenes(){
     $miPost = New Publicacion;
     $miPost->getImagenes();
@@ -183,8 +184,21 @@ function verificarMaxPosts(){
     }
 }
 
+function agregarTag(){
+    $tag = $_POST['tag'];
+    $tag = explode(",",$tag)[0];
+    echo "<div class='col-md-2 col-4 mt-2 bg-dark tag ml-2'>";
+        echo "<button class='eliminarTag btn btn-sm btn-danger' style='background:transparent; border:none;'>&#10005;</button>";
+        echo "<p class='tagContent'>".$tag."</p>";
+    echo "</div>";
+}
+
 if (isset($_POST['cargar'])) {
     CargarImagenes();
+}
+
+if (isset($_POST['tag'])) {
+    agregarTag();
 }
 
 if (isset($_POST['MaxPosts'])) {
@@ -243,5 +257,4 @@ if (isset($_POST['busqueda'])) {
 if (isset($_POST['NombreCat'])) {
     FiltrarCat();   
 }
-
 ?>

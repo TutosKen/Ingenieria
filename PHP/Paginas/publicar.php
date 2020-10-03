@@ -1,5 +1,8 @@
 <?php
 session_start();
+if (!isset($_SESSION['IDUsuario'])) {
+    header('location: /Animales/');
+}
 ?>
 
 
@@ -52,12 +55,12 @@ session_start();
                     </div>
                 </div>
 
-                <div class="col-12 m-auto" style="margin-top:10px!important;">
-                    <textarea id="desc" placeholder="Descripcion" class="form-control" cols="30" rows="6"></textarea>
+                <div id="descDiv" class="col-12 m-auto" style="margin-top:10px!important;">
+                    <textarea id="desc" maxlength="100" placeholder="Descripcion" class="form-control" cols="30" rows="4"></textarea>
                 </div>
 
                 <div class="col-12 m-auto" style="margin-top:10px!important;"> 
-                    <textarea id="tags" placeholder="Tags separados por coma(,)" class="form-control" cols="30" rows="3"></textarea>
+                    <textarea id="tags" maxlength="20" placeholder="Tags separados por coma(,)" class="form-control" cols="30" rows="2"></textarea>
                 </div>
             </div>
         </div>

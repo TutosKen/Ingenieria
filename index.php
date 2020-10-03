@@ -44,7 +44,7 @@ session_start();
 
             </div>
 
-            <div class="row" id="seccionComent">
+            <div class="row" id="seccionPosts">
                 <?php                    
                         $miPost->getImagenes();
                 ?>

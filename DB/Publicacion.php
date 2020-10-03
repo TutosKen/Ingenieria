@@ -58,7 +58,7 @@ class Publicacion{
         if (mysqli_num_rows($result) > 0) {
             while($row = mysqli_fetch_assoc($result)) {
                 echo "<div class='col-6 col-md-3 mt-5'>";
-                echo "<div class='imagen'><a href='/Animales/PHP/Post.php?IDimagen=".$row['IDPost']."'><img class='miniatura' src='".$row['URI']."'><h5 class='text-center'>".$row['Titulo']."</h5></a></div>";
+                echo "<div class='imagen'><a href='/Animales/PHP/Paginas/Post.php?IDimagen=".$row['IDPost']."'><img class='miniatura' src='".$row['URI']."'><h5 class='text-center'>".$row['Titulo']."</h5></a></div>";
                 echo "<div class='vistas'>👁<strong>".$row['CantVistas']."</strong></div>";
                 echo"</div>";
             }
@@ -93,7 +93,7 @@ class Publicacion{
         if (mysqli_num_rows($result) > 0) {
             while($row = mysqli_fetch_assoc($result)) {
                 echo "<div class='col-6 col-md-3 mt-5'>";
-                echo "<div class='imagen'><a href='/Animales/PHP/Post.php?IDimagen=".$row['IDPost']."'><img class='miniatura' src='".$row['URI']."'><h5 class='text-center'>".$row['Titulo']."</h5></a></div>";
+                echo "<div class='imagen'><a href='/Animales/PHP/Paginas/Post.php?IDimagen=".$row['IDPost']."'><img class='miniatura' src='".$row['URI']."'><h5 class='text-center'>".$row['Titulo']."</h5></a></div>";
                 echo "<div class='vistas'>👁<strong>".$row['CantVistas']."</strong></div>";
                 echo"</div>";
             }

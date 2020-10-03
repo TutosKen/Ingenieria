@@ -31,23 +31,21 @@ $(document).ready(function(){
     });
 
     $("#buscar").keyup(function() {
-        cuentaImagenes = 12;
-        $("#mostrarMas").removeAttr('disabled');
-        $("#seccionComent").load("/Animales/PHP/acciones.php",{
-            busqueda:$("#buscar").val()
-        }, function(responseTxt, statusTxt, xhr){
-            if (responseTxt != '') {
-                $("#mostrarMas").hide();
-            }
-        });
-        if (!$("#buscar").val()) {
-            $("#seccionComent").load("/Animales/PHP/acciones.php",{
-                cargar:'true'
-            });
-            setTimeout(function(){
-                $("#mostrarMas").show();
-              }, 100); 
+            // cuentaImagenes = 12;
+            if (this.value != "") {
+                $("#mostrarMas").removeAttr('disabled');
+                $("#seccionPosts").load("/Animales/PHP/acciones.php",{
+                    busqueda:$("#buscar").val()
+                }, function(responseTxt, statusTxt, xhr){
+                    if (responseTxt != '') {
+                        $("#mostrarMas").hide();
+                    }
+                });
+        }else{
+            window.location.replace("/Animales/");
         }
+
+            // window.location.replace("/Animales/PHP/Paginas/editarPerfil.php");
 
     });
 
@@ -55,14 +53,15 @@ $(document).ready(function(){
         $("#mostrarMas").hide();
         $("#mostrarMas").removeAttr('disabled');
         var nombreCat = $(this).html();
-        $("#seccionComent").load("/Animales/PHP/acciones.php",{
+        $("#seccionPosts").load("/Animales/PHP/acciones.php",{
             NombreCat:nombreCat
         });
     });
 
     $("#noFiltro").click(function (){
         cuentaImagenes = 12;
-        $("#seccionComent").load("/Animales/PHP/acciones.php",{
+        $("#mostrarMas").removeAttr('disabled');
+        $("#seccionPosts").load("/Animales/PHP/acciones.php",{
             cargar:'true'
         });
 
@@ -73,7 +72,7 @@ $(document).ready(function(){
 
     $("#mostrarMas").click(function(){
         cuentaImagenes = cuentaImagenes + 4;
-        $("#seccionComent").load("/Animales/PHP/acciones.php",{
+        $("#seccionPosts").load("/Animales/PHP/acciones.php",{
             nuevaCuenta:cuentaImagenes
         });
 
@@ -279,12 +278,26 @@ $(document).ready(function(){
     });
 
     $("#agregarImagen").click(function (){
+        var tagsImg = $(".tagContent");
+        var tags;
+
+        for (var i = 0; i < tagsImg.length; i++) {
+            if (i == 0) {
+                tags = tagsImg[i].innerHTML;
+            }else{
+                tags += "," + tagsImg[i].innerHTML;
+            }
+        }
+
+        // alert(tags);
         var cats = [];
         var fd = new FormData(); 
         var tituloImg  = $("#titulo").val();
         var URIImg = $("#URI").val();
         var descImg = $("#desc").val();
-        var tagsImg = $("#tags").val();
+        var tagsImg = $(".tagContent");
+        
+
         var files = $('#subirImagen')[0].files[0]; 
 
         $('input:checked').each(function (){
@@ -297,7 +310,7 @@ $(document).ready(function(){
         fd.append('titulo',tituloImg);
         fd.append('URI',URIImg);
         fd.append('desc',descImg);
-        fd.append('tags',tagsImg);
+        fd.append('tags',tags);
 
         $.ajax({ 
             url: '/Animales/PHP/agregarImagen.php', 
@@ -322,6 +335,7 @@ $(document).ready(function(){
         $("#desc").val('');
         $("#tags").val('');
         $("input:checked").prop("checked", false);
+        $(".tag").remove();
         $("#preview").attr('src','/Animales/img/imgsPagina/default.jpg')
 
     });
@@ -366,3 +380,26 @@ $(document).ready(function(){
         }
     });
 });
+
+    $("#tags").keyup(function() {
+        if (this.value.indexOf(',') > -1) {
+            $.post("/Animales/PHP/acciones.php", {
+                tag: $("#tags").val()
+            }, function(data,status){
+                $(data).insertAfter("#descDiv");
+                $("#tags").val('');
+                $(".eliminarTag").click(function() {
+                    $(this).parent().remove();
+                    $("#tags").removeAttr("disabled");
+                    $("#tags").attr("placeholder","Tags separados por coma(,)");
+                });
+            });
+
+            if ($(".eliminarTag").length == 4) {
+                $("#tags").attr("disabled","");
+                $("#tags").attr("placeholder","Maximo de tags alcanzado");
+            }
+            
+        }
+    });
+

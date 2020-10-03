@@ -1,5 +1,8 @@
 <?php
 session_start();
+if (!isset($_SESSION['IDUsuario'])) {
+    header('location: /Animales/');
+}
 ?>
 
 <!DOCTYPE html>
