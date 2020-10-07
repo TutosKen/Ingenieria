@@ -15,6 +15,7 @@ session_start();
         <?php
             require_once('../navbar.php');
             require_once('../../DB/Publicacion.php');
+            require_once('../../DB/Comentario.php');
         ?>
     <main>
 
@@ -23,7 +24,8 @@ session_start();
                 <?php
                     if (isset($_GET['IDimagen'])) {
                         $miPost = New Publicacion;
-                        $miPost->setID($_GET['IDimagen']);
+                        $id = $_GET['IDimagen'];
+                        $miPost->setID($id);
                         $miPost->aumentarCantVisitas();
                         $result = $miPost->getImagen();
 
@@ -41,21 +43,36 @@ session_start();
                     }
                 ?>
 
-                <div class="col-12 mt-5 mb-4">
-                    <!-- <h6 class="card-title"></h6> -->
-                    <textarea class="form-control comentario" id="textoComentario" placeholder="Agregar comentario..." cols="30" rows="4"></textarea>
-                    <span><button id="agregarComentario" class="btn btn-success mt-1" style="display:none;">Agregar</button>
-                    <button id="cancelarComentario" class="btn btn-danger mt-1" style="display:none;">Cancelar</button></span>
-                </div>
-
-                <div class="col-11">
-                    <div class="card bg-transparent border-dark" style="width:100%">
-                    <div class="card-header">Usuario</div>
-                    <div class="card-body">Contenido aqui</div>
-
+                
+                <div class="row mb-3">
+                    <div class="col-12 mt-5">
+                    <h5>Comentarios</h5>
+                        <!-- <h6 class="card-title"></h6> -->
+                        <textarea class="form-control comentario bg-transparent mb-1 mt-3" id="textoComentario" placeholder="Agregar comentario..." cols="30" rows="1"></textarea>
+                        <hr class="trans--grow">
+                        <span><button id="agregarComentario" class="btn btn-primary mt-1 border-0" style="display:none;" value="<?php echo $id?>">Agregar</button>
+                        <button id="cancelarComentario" class="btn btn-dark mt-1 border-0" style="display:none;">Cancelar</button></span>
                     </div>
+
                 </div>
-            
+
+                <div class="row" id="seccionComent">
+                    <?php
+                        $miComentario = New Comentario;
+                        $postcom = $miComentario->getPostComentarios();
+
+                        while ($fila = mysqli_fetch_assoc($postcom)) {
+                            if ($fila['FK_Post'] == $id) {
+                                $miComentario->setID($fila['FK_Comentario']);
+                                $miComentario->getComentario();
+
+                            }
+                        }
+                    
+                    ?>
+
+
+                </div>
         </div>
         
 

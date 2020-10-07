@@ -2,6 +2,7 @@
 session_start();
 include '../DB/Usuario.php';
 include '../DB/Publicacion.php';
+include '../DB/Comentario.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -220,6 +221,71 @@ function EliminarPost(){
     }
 }
 
+function agregarComentario(){
+    $miComentario = New Comentario;
+    $texto = $_POST['agregarCom'];
+    $idPost = $_POST['idPost'];
+
+    $miComentario->setComent($texto);
+    $miComentario->setIDPost($idPost);
+    $miComentario->setFKUsuario($_SESSION['IDUsuario']);
+
+    if ($miComentario->agregarComentario()) {
+        $postcom = $miComentario->getPostComentarios();
+
+        while ($fila = mysqli_fetch_assoc($postcom)) {
+            if ($fila['FK_Post'] == $idPost) {
+                $miComentario->setID($fila['FK_Comentario']);
+                $miComentario->getComentario();
+            }
+        }
+    }
+
+    
+}
+
+function modificarComentario(){
+    $miComentario = New Comentario;
+    $comentario = $_POST['comentario'];
+    $esRespuesta = $_POST['esRespuesta'];
+    $id = $_POST['IDcoment'];
+
+    $miComentario->setComent($comentario);
+    $miComentario->setID($id);
+
+    if ($esRespuesta != "") {
+        if ($miComentario->modificarComentario(true)) {
+            echo 1;
+        }
+    }else{
+        if ($miComentario->modificarComentario()) {
+            echo 1;
+        }
+    }
+}
+
+function eliminarComentario(){
+    $miComentario = New Comentario;
+    $id = $_POST['elimComent'];
+    $respuesta = $_POST['esRespuesta'];
+    $miComentario->setID($id);
+
+    if ($respuesta != "") {
+        if ($miComentario->eliminarComentario(true)) {
+            echo 1;
+        }
+    }else{
+        if ($miComentario->eliminarComentario()) {
+            echo 1;
+        }
+    }
+}
+
+
+if (isset($_POST['agregarCom'])) {
+    agregarComentario();
+}
+
 if (isset($_POST['cargar'])) {
     CargarImagenes();
 }
@@ -291,5 +357,13 @@ if (isset($_POST['titulo'])) {
 
 if (isset($_POST['idElimP'])) {
     EliminarPost();
+}
+
+if (isset($_POST['comentario'])) {
+    modificarComentario();
+}
+
+if (isset($_POST['elimComent'])) {
+    eliminarComentario();
 }
 ?>

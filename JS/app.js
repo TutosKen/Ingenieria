@@ -426,6 +426,95 @@ $(document).ready(function(){
         padre.find(".eliminarPost").slideToggle("fast");
     });
 
+    $(document).on('click','.mostrarOpciones', function(){
+        var padre = $(this).parent();
+        padre.find(".editarComent").slideToggle("fast");
+        padre.find(".eliminarComent").slideToggle("fast");
+    });
+
+    $(document).on('click','.editarComent', function(){
+         var padre = $(this).parent();
+         var coment = padre.find('.card-body');
+         coment.attr('contentEditable','true');
+         coment.focus();
+         var current = coment.html();
+
+        var edit = $(this);
+        edit.html("Aceptar");
+        edit.removeClass("editarComent");
+        edit.addClass("confirmarEditComent");
+
+        var elim = padre.find(".eliminarComent");
+        elim.html("Cancelar");
+        elim.removeClass("eliminarComent");
+        elim.addClass("cancelarEditComent");
+        $(".cancelarEditComent").click(function(){
+            coment.removeAttr('contentEditable');
+            coment.html(current);
+            edit.removeClass("confirmarEditComent");
+            edit.addClass("editarComent");
+            edit.html("&#9998");
+
+            elim.removeClass("cancelarEditComent");
+            elim.addClass("eliminarComent");
+            elim.html("&#10006");
+        });
+    });
+
+    $(document).on('click','.confirmarEditComent', function(){
+        var respuesta = "";
+        var ID = $(this).val();
+        var padre = $(this).parent();
+        var coment = padre.find('.card-body');
+        if ($(this).hasClass("respuesta")) {
+            respuesta = "true";
+        }
+
+        $.post("/Animales/PHP/acciones.php",{
+            comentario: coment.html(),
+            esRespuesta: respuesta,
+            IDcoment: ID 
+        }, function(data,status){
+            if (!data == 1) {
+                alert("Algo salio mal");
+            }
+        });
+        var elim = padre.find(".cancelarEditComent");
+        coment.removeAttr('contentEditable');
+
+        var edit = $(this);
+        edit.html("&#9998");
+        edit.removeClass("confirmarEditComent");
+        edit.addClass("editarComent");
+
+        elim.removeClass("cancelarEditComent");
+        elim.addClass("eliminarComent");
+        elim.html("&#10006");
+
+        edit.slideToggle("fast");
+        elim.slideToggle("fast");
+    });
+
+    $(document).on('click','.eliminarComent', function(){
+        var id = $(this).val();
+        var respuesta = "";
+
+        if ($(this).hasClass("respuesta")) {
+            respuesta = "true";
+        }
+
+        $.post("/Animales/PHP/acciones.php",{
+            elimComent: id,
+            esRespuesta: respuesta
+        },function(data,status){
+            if (data == 1) {
+                $("#seccionComent").load(location.href+" #seccionComent>*","")
+            }
+        });
+
+    });
+
+
     $(".eliminarPost").click(function(){
         var id = $(this).val();
         var padre = $(this).parent();
@@ -460,14 +549,43 @@ $(document).ready(function(){
 
 
     $("#textoComentario").click(function(){
+        setTimeout(function(){
+            $('.trans--grow').addClass('grow');
+        }, 0);
         $("#agregarComentario").show();
         $("#cancelarComentario").show();
+        $("#agregarComentario").attr("disabled","");
+    });
+
+    $("#textoComentario").keyup(function(){
+        if (this.value != '') {
+            $("#agregarComentario").removeAttr("disabled");
+        }else{
+            $("#agregarComentario").attr("disabled","");
+        }
     });
 
     $("#cancelarComentario").click(function(){
+        setTimeout(function(){
+            $('.trans--grow').removeClass('grow');
+        }, 0);
+        $("#textoComentario").val('');
         $("#agregarComentario").hide();
         $("#cancelarComentario").hide();
     });
+
+    $("#agregarComentario").click(function(){
+        var comentario = $("#textoComentario").val()
+        var idPost = $("#agregarComentario").val();
+
+        $("#seccionComent").load("/Animales/PHP/acciones.php",{
+            agregarCom:$("#textoComentario").val(),
+            idPost: $("#agregarComentario").val()
+        });
+        $("#textoComentario").val('');
+    });
+
+
 
     $("#tags").keyup(function() {
         if (this.value.indexOf(',') > -1) {
