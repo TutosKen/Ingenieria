@@ -132,13 +132,13 @@ function EnviarCorreoRecuperacion(){
             $mail = New PHPMailer(true);
             $mail->IsSMTP();
             try {
-                $mail->From = "tutos1620@gmail.com";
+                $mail->From = "tucorreoaqui@gmail.com";
                 $mail->SMTPAuth = true;
                 $mail->SMTPSecure = 'tls'; //seguridad
                 $mail->Host = "smtp.gmail.com"; // servidor smtp
                 $mail->Port = 587; //puerto
-                $mail->Username ='tutos1620@gmail.com'; //nombre usuario
-                $mail->Password = 'keneth155tutos'; //contraseña
+                $mail->Username ='tucorreoaqui@gmail.com'; //nombre usuario
+                $mail->Password = 'tucontrasennaAqui'; //contraseña
         
                 $mail->AddAddress($_SESSION['emailRecuperacion'],'Admin@animales.com');
                 $mail->Subject = 'Recuperacion de contrasenna';
